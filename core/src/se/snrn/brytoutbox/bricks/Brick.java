@@ -13,6 +13,7 @@ import se.snrn.brytoutbox.*;
 
 import java.util.ArrayList;
 
+import static se.snrn.brytoutbox.GameBoard.PPM;
 import static se.snrn.brytoutbox.Types.BALL;
 import static se.snrn.brytoutbox.Types.BRICK;
 
@@ -115,7 +116,6 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
         rectangle.setPosition(x, y);
         body.setTransform(x+32,y+16,0);
-        body.getPosition().set(x, y);
         sprite.setPosition(body.getPosition().x - rectangle.getWidth() / 2, body.getPosition().y - rectangle.getHeight() / 2);
 
     }

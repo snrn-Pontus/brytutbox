@@ -58,7 +58,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
         fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
         fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0f;
+        fixtureDef.friction = 0.5f;
         fixtureDef.restitution = 1f; // Make it bounce a little bit
 
 // Create our fixture and attach it to the body

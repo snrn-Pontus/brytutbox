@@ -6,12 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static se.snrn.brytoutbox.Types.BALL;
-import static se.snrn.brytoutbox.Types.BRICK;
 
 public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
@@ -66,7 +63,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
 // Create our body in the world using our body definition
         body = GameBoard.world.createBody(bodyDef);
-        body.applyLinearImpulse(0, 500, 0,0,true);
+        body.applyLinearImpulse(0, 1000, 0,0,true);
         body.setUserData(BALL);
 
 // Create a circle shape and set its radius to 6
@@ -89,7 +86,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         circle.dispose();
 
 
-
     }
 
 
@@ -101,7 +97,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
             body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y+BALL_SIZE, 0);
         }
         sprite.setPosition(body.getPosition().x-BALL_SIZE/2, body.getPosition().y-BALL_SIZE/2);
-
     }
 
     @Override

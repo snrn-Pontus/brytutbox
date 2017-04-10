@@ -31,6 +31,7 @@ public class GameBoard implements Screen {
     private OrthographicCamera orthographicCamera;
     private FitViewport viewPort;
     BrickPool brickPool;
+    public static int PPM = 100;
 
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
@@ -41,8 +42,9 @@ public class GameBoard implements Screen {
         this.shapeRenderer = shapeRenderer;
 
 
-        Vector2 gravity = new Vector2(0, -1);
+        Vector2 gravity = new Vector2(0, 0);
         world = new World(gravity, true);
+
 
         paddle = new Paddle();
         ball = new Ball();
@@ -55,7 +57,7 @@ public class GameBoard implements Screen {
         new Wall(0 - Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - 4, Gdx.graphics.getWidth(), 8);
 
 
-        orthographicCamera = new OrthographicCamera();
+        orthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewPort = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), orthographicCamera);
         batch.setProjectionMatrix(orthographicCamera.combined);
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
@@ -68,6 +70,7 @@ public class GameBoard implements Screen {
 
         inputHandler = new InputHandler(paddle, ball);
 
+
         Gdx.input.setInputProcessor(inputHandler);
     }
 
@@ -76,6 +79,7 @@ public class GameBoard implements Screen {
         orthographicCamera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
         orthographicCamera.update();
         viewPort.setCamera(orthographicCamera);
+        //viewPort.setWorldSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewPort.setScreenPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         viewPort.apply();
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
