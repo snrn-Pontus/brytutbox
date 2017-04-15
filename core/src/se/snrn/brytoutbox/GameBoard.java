@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -31,7 +32,10 @@ public class GameBoard implements Screen {
     private OrthographicCamera orthographicCamera;
     private FitViewport viewPort;
     BrickPool brickPool;
-    public static int PPM = 100;
+    public static int PPM = 32;
+
+    private static final int WIDTH = 640;
+    private static final int HEIGHT = 480;
 
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
@@ -52,19 +56,23 @@ public class GameBoard implements Screen {
 
         box2DDebugRenderer = new Box2DDebugRenderer();
 
-        new Wall(0 - 12, 0 - Gdx.graphics.getHeight() / 2, 8, Gdx.graphics.getHeight());
-        new Wall(Gdx.graphics.getWidth(), 0 - Gdx.graphics.getHeight() / 2, 8, Gdx.graphics.getHeight());
-        new Wall(0 - Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - 4, Gdx.graphics.getWidth(), 8);
+
+        Box2DFactory.createRectangleBody(-4, HEIGHT / 2, 8, HEIGHT, new Object());
+        Box2DFactory.createRectangleBody(WIDTH + 4, HEIGHT / 2, 8, HEIGHT, new Object());
+
+        Box2DFactory.createRectangleBody(WIDTH/2, HEIGHT + 4, WIDTH, 8, new Object());
+        Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
 
 
-        orthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewPort = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), orthographicCamera);
+        orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
         batch.setProjectionMatrix(orthographicCamera.combined);
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
 
         collisionHandler = new CollisionHandler(world);
 
-        brickGrid = new BrickGrid(MapLoader.getLevel(2), brickPool);
+        //brickGrid = new BrickGrid(MapLoader.getLevel(2), brickPool);
+
+        brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
 
 //        collisionHandler = new CollisionHandler(ball, paddle, brickGrid);
 
@@ -76,12 +84,11 @@ public class GameBoard implements Screen {
 
     @Override
     public void show() {
-        orthographicCamera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
+        //orthographicCamera.position.set((WIDTH/PPM)/2,(WIDTH/PPM)/2, 0);
+        orthographicCamera.position.set(orthographicCamera.viewportWidth / 2f, orthographicCamera.viewportHeight / 2f, 0);
+
         orthographicCamera.update();
-        viewPort.setCamera(orthographicCamera);
-        //viewPort.setWorldSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewPort.setScreenPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        viewPort.apply();
+
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
 
 
@@ -94,8 +101,6 @@ public class GameBoard implements Screen {
 
 
         orthographicCamera.update();
-        viewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewPort.apply();
 
         world.step(1 / 60f, 6, 2);
 
@@ -106,7 +111,7 @@ public class GameBoard implements Screen {
         brickGrid.update(delta);
 
 
-        if(ball.body.getPosition().y < -10){
+        if (ball.body.getPosition().y < -10) {
             System.out.println("game over");
         }
 

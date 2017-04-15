@@ -12,7 +12,7 @@ public class Wall implements Collidable{
 
     private Types type;
 
-    public Wall(int x, int y, int width, int height) {
+    public Wall(float x, float y, float width, float height) {
 
         type = WALL;
 

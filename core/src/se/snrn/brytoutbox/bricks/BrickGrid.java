@@ -9,6 +9,8 @@ import se.snrn.brytoutbox.GameBoard;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 
+import static se.snrn.brytoutbox.GameBoard.PPM;
+
 public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     private Brick[][] bricks;
@@ -29,7 +31,7 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
             for (int y = 0; y < map[x].length; y++) {
                 if (map[x][y] != 0) {
                     bricks[x][y] = brickPool.obtain();
-                    bricks[x][y].init(x * 64, bottom + y * 32, map[x][y]);
+                    bricks[x][y].init((x * 64), y * 32, map[x][y]);
                 }
             }
         }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 
+import static se.snrn.brytoutbox.GameBoard.PPM;
 import static se.snrn.brytoutbox.Types.BALL;
 
 public class Ball implements Updateable, Renderable, Debuggable, Collidable {
@@ -30,9 +31,9 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         this.stuck = stuck;
     }
 
-    public void release(){
+    public void release() {
         stuck = false;
-        body.applyLinearImpulse(0, 500, 0,0,true);
+        body.applyLinearImpulse(0, 1, 0, 0, true);
 
     }
 
@@ -55,48 +56,19 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         centerX = x + 16;
         centerY = y + 16;
 
-        BodyDef bodyDef = new BodyDef();
-// We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-// Set our body's starting position in the world
-        bodyDef.position.set(x, y);
+        body = Box2DFactory.createCircleBody(x, y, 16, this);
 
-// Create our body in the world using our body definition
-        body = GameBoard.world.createBody(bodyDef);
-        body.applyLinearImpulse(0, 1000, 0,0,true);
-        body.setUserData(BALL);
-
-// Create a circle shape and set its radius to 6
-        CircleShape circle = new CircleShape();
-        circle.setRadius(16);
-
-// Create a fixture definition to apply our shape to
-        fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0f;
-        fixtureDef.restitution = 1f; // Make it bounce a little bit
-
-// Create our fixture and attach it to the body
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-
-// Remember to dispose of any shapes after you're done with them!
-// BodyDef and FixtureDef don't need disposing, but shapes do.
-        circle.dispose();
-
+        sprite.setSize(BALL_SIZE / PPM, BALL_SIZE / PPM);
 
     }
 
 
-
-
     @Override
     public void update(float delta) {
-        if(stuck){
-            body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y+BALL_SIZE, 0);
+        if (stuck) {
+            body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y + BALL_SIZE/PPM, 0);
         }
-        sprite.setPosition(body.getPosition().x-BALL_SIZE/2, body.getPosition().y-BALL_SIZE/2);
+        sprite.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
     }
 
     @Override
@@ -110,7 +82,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 //        shapeRenderer.line(centerX, centerY, centerX + xVel * 100, centerY + yVel * 100);
 //        shapeRenderer.circle(circle.x, circle.y, circle.radius);
     }
-
 
 
     public int getX() {

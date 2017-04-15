@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
@@ -14,7 +13,6 @@ import se.snrn.brytoutbox.*;
 import java.util.ArrayList;
 
 import static se.snrn.brytoutbox.GameBoard.PPM;
-import static se.snrn.brytoutbox.Types.BALL;
 import static se.snrn.brytoutbox.Types.BRICK;
 
 public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable, Collidable {
@@ -24,14 +22,12 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     private BrickGrid brickGrid;
 
     private Sprite sprite;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
-    private Rectangle rectangle;
     private int strength;
     private ArrayList<Sprite> sprites;
     Body body;
-    FixtureDef fixtureDef;
     private Types type;
     private boolean destroyed;
 
@@ -43,42 +39,15 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         this.destroyed = destroyed;
     }
 
-    public void init(int x, int y, int strength) {
+    public void init(float x, float y, int strength) {
         this.strength = strength;
         this.x = x;
         this.y = y;
-        rectangle = new Rectangle(x - 32, y - 16, 64, 32);
         sprite = sprites.get(strength);
 
-        BodyDef bodyDef = new BodyDef();
-// We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-// Set our body's starting position in the world
-        bodyDef.position.set(x, y);
+        body = Box2DFactory.createRectangleBody(x,y,64, 32, this);
 
-// Create our body in the world using our body definition
-        body = GameBoard.world.createBody(bodyDef);
-
-// Create a circle shape and set its radius to 6
-        PolygonShape circle = new PolygonShape();
-        circle.setAsBox(rectangle.width / 2, rectangle.height / 2);
-
-// Create a fixture definition to apply our shape to
-        fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0f;
-        fixtureDef.restitution = 1f; // Make it bounce a little bit
-
-// Create our fixture and attach it to the body
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-
-// Remember to dispose of any shapes after you're done with them!
-// BodyDef and FixtureDef don't need disposing, but shapes do.
-        circle.dispose();
-
-
+        sprite.setSize(64/PPM, 32/PPM);
     }
 
     public Brick() {
@@ -90,7 +59,6 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
             sprites.add(new Sprite(new Texture(Gdx.files.internal("gfx/brick_" + i + ".png"))));
 
         }
-        rectangle = new Rectangle(x, y, 64, 32);
 
         type = BRICK;
         brickGrid = GameBoard.brickGrid;
@@ -102,7 +70,6 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         x = 0;
         y = 0;
         strength = 0;
-        rectangle = null;
         sprite = null;
 
     }
@@ -114,9 +81,9 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
             destroyed = true;
         }
 
-        rectangle.setPosition(x, y);
-        body.setTransform(x+32,y+16,0);
-        sprite.setPosition(body.getPosition().x - rectangle.getWidth() / 2, body.getPosition().y - rectangle.getHeight() / 2);
+        body.setTransform((x+32)/PPM,(y+16)/PPM,0);
+
+        sprite.setPosition(body.getPosition().x-1, body.getPosition().y-0.5f);
 
     }
 
@@ -130,25 +97,13 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         //shapeRenderer.rect(x, y, 64, 32);
     }
 
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
-    }
-
-
-    public int getCenterX() {
-        return (int) (rectangle.getX() + rectangle.getWidth() / 2);
-    }
-
-    public int getCenterY() {
-        return (int) (rectangle.getY() + rectangle.getHeight() / 2);
     }
 
     public int getStrength() {
@@ -161,6 +116,8 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
             strength--;
             System.out.println("hit");
             sprite = sprites.get(strength);
+            sprite.setSize(64/PPM, 32/PPM);
+
         }
     }
 
