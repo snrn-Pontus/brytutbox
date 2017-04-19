@@ -21,27 +21,24 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
     private Sprite sprite;
     private int x;
     private int y;
-    private int xVel;
 
     private boolean movingLeft;
     private boolean movingRight;
     Body body;
-    FixtureDef fixtureDef;
     private Types type;
 
 
     public Paddle() {
-        sprite = new Sprite(new Texture(Gdx.files.internal("gfx/brick.png")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("gfx/paddle.png")));
         x = 50;
-        y = 16;
-        xVel = 5;
+        y = 8;
 
         type = PADDLE;
 
 
-        body = Box2DFactory.createRectangleBody(x, y, 64, 32, this);
+        body = Box2DFactory.createRectangleBody(x, y, 96, 16, this);
 
-        sprite.setSize(64 / PPM, 32 / PPM);
+        sprite.setSize(3, 0.5f);
 
 
     }
@@ -63,7 +60,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
         if (movingRight) {
             body.setLinearVelocity(+20, 0);
         }
-        sprite.setPosition(body.getPosition().x-1, body.getPosition().y-0.5f);
+        sprite.setPosition(body.getPosition().x-1.5f, body.getPosition().y-0.25f);
 
     }
 

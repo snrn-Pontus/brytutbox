@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
+import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
 
 
@@ -37,6 +38,8 @@ public class GameBoard implements Screen {
     private static final int WIDTH = 640;
     private static final int HEIGHT = 480;
 
+    public static EffectManager effectManager;
+
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
         brickPool = new BrickPool();
@@ -53,6 +56,7 @@ public class GameBoard implements Screen {
         paddle = new Paddle();
         ball = new Ball();
 
+        effectManager = new EffectManager();
 
         box2DDebugRenderer = new Box2DDebugRenderer();
 
@@ -110,6 +114,7 @@ public class GameBoard implements Screen {
 //        collisionHandler.update(delta);
         brickGrid.update(delta);
 
+        effectManager.update(delta);
 
         if (ball.body.getPosition().y < -10) {
             System.out.println("game over");
@@ -124,6 +129,7 @@ public class GameBoard implements Screen {
         paddle.render(batch);
         brickGrid.render(batch);
         ball.render(batch);
+        effectManager.render(batch);
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.effects.ScoreFloater;
 
 import java.util.ArrayList;
 
@@ -78,6 +79,7 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     public void update(float delta) {
 
         if(strength <= 0) {
+            GameBoard.effectManager.addScoreFloater(new ScoreFloater(body.getPosition().x,body.getPosition().y,100));
             destroyed = true;
         }
 
