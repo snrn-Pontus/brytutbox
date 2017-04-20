@@ -33,7 +33,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         y = 100;
 
         paddle = GameBoard.paddle;
-        stuck = true;
+        stuck = false;
 
         type = BALL;
 

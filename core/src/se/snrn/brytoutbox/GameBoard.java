@@ -17,6 +17,7 @@ import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
 import se.snrn.brytoutbox.ui.BallManager;
+import se.snrn.brytoutbox.ui.Ui;
 
 import java.util.ArrayList;
 
@@ -42,12 +43,14 @@ public class GameBoard implements Screen {
     private static final int HEIGHT = 480;
 
     public static EffectManager effectManager;
-    private ArrayList<Ball> balls;
     private Batch uiBatch;
     private BallManager ballManager;
+    private Ui ui;
+    public static Score score;
 
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
+        score = new Score();
         brickPool = new BrickPool();
 
 
@@ -64,11 +67,16 @@ public class GameBoard implements Screen {
 
         ballManager = new BallManager();
         Ball ball = new Ball();
+        Ball ball2 = new Ball();
+        ball2.body.applyLinearImpulse(0, 1, 0, 0, true);
         ballManager.addBall(ball);
+        ballManager.addBall(ball2);
         ball.setStuck(true);
         paddle.setStuckBall(ball);
+        ballManager.addBall(new Ball());
 
 
+        ui = new Ui(score, ballManager);
 
 
         effectManager = new EffectManager();
@@ -95,7 +103,7 @@ public class GameBoard implements Screen {
         brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
 
 
-        inputHandler = new InputHandler(paddle, balls);
+        inputHandler = new InputHandler(paddle, ballManager);
 
 
         Gdx.input.setInputProcessor(inputHandler);
@@ -132,6 +140,7 @@ public class GameBoard implements Screen {
 
         effectManager.update(delta);
 
+        ui.update(delta);
 
 
         batch.setProjectionMatrix(orthographicCamera.combined);
@@ -148,6 +157,7 @@ public class GameBoard implements Screen {
 
         uiBatch.setProjectionMatrix(uiCamera.combined);
         uiBatch.begin();
+        ui.render(uiBatch);
         effectManager.render(uiBatch);
         uiBatch.end();
 

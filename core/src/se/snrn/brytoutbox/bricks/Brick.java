@@ -80,6 +80,7 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
         if(strength <= 0) {
             GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x,body.getPosition().y,100));
+            GameBoard.score.addScore(100);
             destroyed = true;
         }
 

@@ -2,15 +2,16 @@ package se.snrn.brytoutbox;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import se.snrn.brytoutbox.ui.BallManager;
 
 import java.util.ArrayList;
 
 public class InputHandler implements InputProcessor{
 
     private Paddle paddle;
-    private ArrayList<Ball> balls;
+    private BallManager balls;
 
-    public InputHandler(Paddle paddle, ArrayList<Ball> balls) {
+    public InputHandler(Paddle paddle, BallManager balls) {
 
         this.paddle = paddle;
         this.balls = balls;
