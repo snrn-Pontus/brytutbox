@@ -20,25 +20,9 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     private int centerY;
 
     Body body;
-    FixtureDef fixtureDef;
     Paddle paddle;
-
-    public boolean isStuck() {
-        return stuck;
-    }
-
-    public void setStuck(boolean stuck) {
-        this.stuck = stuck;
-    }
-
-    public void release() {
-        stuck = false;
-        body.applyLinearImpulse(0, 1, 0, 0, true);
-
-    }
-
+    private boolean lost;
     private boolean stuck;
-
 
     public static int BALL_SIZE = 32;
     private Types type;
@@ -63,10 +47,26 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     }
 
 
+
+    public boolean isStuck() {
+        return stuck;
+    }
+
+    public void setStuck(boolean stuck) {
+        this.stuck = stuck;
+    }
+
+    public void release() {
+        stuck = false;
+        body.applyLinearImpulse(0, 1, 0, 0, true);
+
+    }
+
+
     @Override
     public void update(float delta) {
         if (stuck) {
-            body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y + BALL_SIZE/PPM, 0);
+            body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y + BALL_SIZE / PPM, 0);
         }
         sprite.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
     }
@@ -101,5 +101,13 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     @Override
     public Types getType() {
         return type;
+    }
+
+    public void setLost(boolean lost) {
+        this.lost = lost;
+    }
+
+    public boolean isLost() {
+        return lost;
     }
 }

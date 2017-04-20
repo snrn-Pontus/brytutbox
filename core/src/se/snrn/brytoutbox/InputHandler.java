@@ -3,15 +3,17 @@ package se.snrn.brytoutbox;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
+import java.util.ArrayList;
+
 public class InputHandler implements InputProcessor{
 
     private Paddle paddle;
-    private Ball ball;
+    private ArrayList<Ball> balls;
 
-    public InputHandler(Paddle paddle, Ball ball) {
+    public InputHandler(Paddle paddle, ArrayList<Ball> balls) {
 
         this.paddle = paddle;
-        this.ball = ball;
+        this.balls = balls;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class InputHandler implements InputProcessor{
             paddle.setMovingRight(true);
         }
         if(keycode == Input.Keys.SPACE){
-            ball.release();
+            GameBoard.paddle.release();
         }
 
         return false;

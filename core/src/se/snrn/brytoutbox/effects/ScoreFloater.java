@@ -1,11 +1,8 @@
 package se.snrn.brytoutbox.effects;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import static se.snrn.brytoutbox.GameBoard.PPM;
 
@@ -15,25 +12,29 @@ public class ScoreFloater implements Effect {
     private float y;
     private int score;
     private boolean finished;
-    private Sprite one;
+
+    private BitmapFont bitmapFont;
 
     public ScoreFloater(float x, float y, int score) {
-        this.x = x;
-        this.y = y;
+        this.x = x*PPM;
+        this.y = y*PPM;
         this.score = score;
-        one = new Sprite(new Texture(Gdx.files.internal("gfx/num_1.png")));
-        one.setSize(1, 1);
+        bitmapFont = new BitmapFont();
+
     }
 
     @Override
     public void update(float delta) {
-        y += 0.1f;
-        one.setPosition(x, y);
+        y += 1f;
+
+        if (y > 480 ) {
+            finished = true;
+        }
     }
 
     @Override
     public void render(Batch batch) {
-        one.draw(batch);
+        bitmapFont.draw(batch, score+"", x, y);
     }
 
     @Override

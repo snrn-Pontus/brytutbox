@@ -6,14 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
 
-import static se.snrn.brytoutbox.GameBoard.PPM;
-import static se.snrn.brytoutbox.GameBoard.world;
-import static se.snrn.brytoutbox.Types.BALL;
-import static se.snrn.brytoutbox.Types.BRICK;
 import static se.snrn.brytoutbox.Types.PADDLE;
 
 public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
@@ -26,6 +20,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
     private boolean movingRight;
     Body body;
     private Types type;
+    private Ball stuckBall;
 
 
     public Paddle() {
@@ -39,7 +34,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
         body = Box2DFactory.createRectangleBody(x, y, 96, 16, this);
 
         sprite.setSize(3, 0.5f);
-
+        stuckBall = null;
 
     }
 
@@ -91,5 +86,13 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
     @Override
     public Types getType() {
         return type;
+    }
+
+    public void release() {
+        stuckBall.release();
+    }
+
+    public void setStuckBall(Ball stuckBall) {
+        this.stuckBall = stuckBall;
     }
 }

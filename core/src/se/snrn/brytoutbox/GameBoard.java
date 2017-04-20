@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -15,6 +16,9 @@ import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
+import se.snrn.brytoutbox.ui.BallManager;
+
+import java.util.ArrayList;
 
 
 public class GameBoard implements Screen {
@@ -22,7 +26,6 @@ public class GameBoard implements Screen {
     private Batch batch;
     private ShapeRenderer shapeRenderer;
 
-    private Ball ball;
     public static Paddle paddle;
     private InputHandler inputHandler;
     private Box2DDebugRenderer box2DDebugRenderer;
@@ -31,14 +34,17 @@ public class GameBoard implements Screen {
     private CollisionHandler collisionHandler;
     public static World world;
     private OrthographicCamera orthographicCamera;
-    private FitViewport viewPort;
-    BrickPool brickPool;
+    private OrthographicCamera uiCamera;
+    private BrickPool brickPool;
     public static int PPM = 32;
 
     private static final int WIDTH = 640;
     private static final int HEIGHT = 480;
 
     public static EffectManager effectManager;
+    private ArrayList<Ball> balls;
+    private Batch uiBatch;
+    private BallManager ballManager;
 
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
@@ -46,6 +52,7 @@ public class GameBoard implements Screen {
 
 
         this.batch = batch;
+        uiBatch = new SpriteBatch();
         this.shapeRenderer = shapeRenderer;
 
 
@@ -54,7 +61,15 @@ public class GameBoard implements Screen {
 
 
         paddle = new Paddle();
-        ball = new Ball();
+
+        ballManager = new BallManager();
+        Ball ball = new Ball();
+        ballManager.addBall(ball);
+        ball.setStuck(true);
+        paddle.setStuckBall(ball);
+
+
+
 
         effectManager = new EffectManager();
 
@@ -64,11 +79,12 @@ public class GameBoard implements Screen {
         Box2DFactory.createRectangleBody(-4, HEIGHT / 2, 8, HEIGHT, new Object());
         Box2DFactory.createRectangleBody(WIDTH + 4, HEIGHT / 2, 8, HEIGHT, new Object());
 
-        Box2DFactory.createRectangleBody(WIDTH/2, HEIGHT + 4, WIDTH, 8, new Object());
+        Box2DFactory.createRectangleBody(WIDTH / 2, HEIGHT + 4, WIDTH, 8, new Object());
         Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
 
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
+        uiCamera = new OrthographicCamera(WIDTH, HEIGHT);
         batch.setProjectionMatrix(orthographicCamera.combined);
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
 
@@ -78,9 +94,8 @@ public class GameBoard implements Screen {
 
         brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
 
-//        collisionHandler = new CollisionHandler(ball, paddle, brickGrid);
 
-        inputHandler = new InputHandler(paddle, ball);
+        inputHandler = new InputHandler(paddle, balls);
 
 
         Gdx.input.setInputProcessor(inputHandler);
@@ -88,10 +103,11 @@ public class GameBoard implements Screen {
 
     @Override
     public void show() {
-        //orthographicCamera.position.set((WIDTH/PPM)/2,(WIDTH/PPM)/2, 0);
         orthographicCamera.position.set(orthographicCamera.viewportWidth / 2f, orthographicCamera.viewportHeight / 2f, 0);
+        uiCamera.position.set(uiCamera.viewportWidth / 2f, uiCamera.viewportHeight / 2f, 0);
 
         orthographicCamera.update();
+        uiCamera.update();
 
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
 
@@ -105,20 +121,18 @@ public class GameBoard implements Screen {
 
 
         orthographicCamera.update();
+        uiCamera.update();
 
         world.step(1 / 60f, 6, 2);
 
 
         paddle.update(delta);
-        ball.update(delta);
-//        collisionHandler.update(delta);
+        ballManager.update(delta);
         brickGrid.update(delta);
 
         effectManager.update(delta);
 
-        if (ball.body.getPosition().y < -10) {
-            System.out.println("game over");
-        }
+
 
         batch.setProjectionMatrix(orthographicCamera.combined);
 
@@ -128,9 +142,14 @@ public class GameBoard implements Screen {
         batch.begin();
         paddle.render(batch);
         brickGrid.render(batch);
-        ball.render(batch);
-        effectManager.render(batch);
+        ballManager.render(batch);
         batch.end();
+
+
+        uiBatch.setProjectionMatrix(uiCamera.combined);
+        uiBatch.begin();
+        effectManager.render(uiBatch);
+        uiBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         paddle.drawDebug(shapeRenderer);
