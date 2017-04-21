@@ -8,18 +8,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
+import se.snrn.brytoutbox.persistance.ScoreReceiver;
 import se.snrn.brytoutbox.ui.BallManager;
 import se.snrn.brytoutbox.ui.Ui;
-
-import java.util.ArrayList;
 
 
 public class GameBoard implements Screen {
@@ -107,6 +104,10 @@ public class GameBoard implements Screen {
 
 
         Gdx.input.setInputProcessor(inputHandler);
+
+
+        ScoreReceiver scoreReceiver = new ScoreReceiver();
+        Score score = scoreReceiver.getScore();
     }
 
     @Override
