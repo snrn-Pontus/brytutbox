@@ -10,7 +10,7 @@ public class MapLoader {
     public static int emptyRows = 10;
 
     public static int[][] getRandomGrid() {
-        int[][] brickMap = new int[10][29];
+        int[][] brickMap = new int[8][29];
 
         for (int x = 0; x < brickMap.length; x++) {
             for (int y = 0; y < brickMap[x].length; y++) {

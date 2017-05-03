@@ -18,6 +18,7 @@ public class Box2DFactory {
         Body body = GameBoard.world.createBody(bodyDef);
         body.setBullet(true);
 
+
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
 
@@ -26,6 +27,7 @@ public class Box2DFactory {
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 1f;
+
 
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(object);

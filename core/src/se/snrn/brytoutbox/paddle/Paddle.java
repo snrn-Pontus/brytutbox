@@ -45,7 +45,6 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
     }
 
 
-
     @Override
     public void update(float delta) {
         if (!movingLeft) {
@@ -55,13 +54,13 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
             body.setLinearVelocity(0, 0);
         }
 
-        if (movingLeft && body.getPosition().x > 0+1.5f) {
+        if (movingLeft && body.getPosition().x > 0 + 1.5f) {
             body.setLinearVelocity(-20, 0);
         }
-        if (movingRight && body.getPosition().x < Gdx.graphics.getWidth()/PPM -1.5f) {
+        if (movingRight && body.getPosition().x < Gdx.graphics.getWidth() / PPM - 1.5f) {
             body.setLinearVelocity(+20, 0);
         }
-        sprite.setPosition(body.getPosition().x-1.5f, body.getPosition().y-0.25f);
+        sprite.setPosition(body.getPosition().x - 1.5f, body.getPosition().y - 0.25f);
 
     }
 
@@ -95,7 +94,10 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
     }
 
     public void release() {
-        stuckBall.release();
+        if (stuckBall != null) {
+            stuckBall.release();
+            stuckBall = null;
+        }
     }
 
     public void setStuckBall(Ball stuckBall) {

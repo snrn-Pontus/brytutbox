@@ -14,6 +14,7 @@ import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
+import se.snrn.brytoutbox.effects.BallTrail;
 import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
 import se.snrn.brytoutbox.paddle.Paddle;
@@ -48,6 +49,7 @@ public class GameBoard implements Screen {
     private BallManager ballManager;
     private Ui ui;
     public static Score score;
+    BallTrail ballTrail;
 
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
@@ -68,6 +70,7 @@ public class GameBoard implements Screen {
 
         ballManager = new BallManager();
         Ball ball = new Ball();
+        ballTrail = new BallTrail(ball);
         ballManager.addBall(ball);
         ball.setStuck(true);
         paddle.setStuckBall(ball);
@@ -85,7 +88,7 @@ public class GameBoard implements Screen {
         Box2DFactory.createRectangleBody(WIDTH + 4, HEIGHT / 2, 8, HEIGHT, new Object());
 
         Box2DFactory.createRectangleBody(WIDTH / 2, HEIGHT + 4, WIDTH, 8, new Object());
-        //Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
+        Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
 
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
@@ -139,6 +142,8 @@ public class GameBoard implements Screen {
         ballManager.update(delta);
         brickGrid.update(delta);
 
+        ballTrail.update(delta);
+
         effectManager.update(delta);
 
         ui.update(delta);
@@ -153,6 +158,7 @@ public class GameBoard implements Screen {
         paddle.render(batch);
         brickGrid.render(batch);
         ballManager.render(batch);
+        ballTrail.render(batch);
         batch.end();
 
 

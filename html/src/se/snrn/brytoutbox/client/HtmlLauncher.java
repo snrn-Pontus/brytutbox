@@ -7,13 +7,14 @@ import se.snrn.brytoutbox.BrytUtBox;
 
 public class HtmlLauncher extends GwtApplication {
 
-        @Override
-        public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(480, 320);
-        }
+    @Override
+    public GwtApplicationConfiguration getConfig() {
+        return new GwtApplicationConfiguration(540, 960);
 
-        @Override
-        public ApplicationListener createApplicationListener () {
-                return new BrytUtBox();
-        }
+    }
+
+    @Override
+    public ApplicationListener createApplicationListener() {
+        return new BrytUtBox();
+    }
 }

@@ -22,7 +22,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     private int x;
     private int y;
 
-    Body body;
+    public Body body;
     Paddle paddle;
     private boolean lost;
     private boolean stuck;
