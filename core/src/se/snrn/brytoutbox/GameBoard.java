@@ -24,6 +24,7 @@ import se.snrn.brytoutbox.ui.Ui;
 
 public class GameBoard implements Screen {
 
+
     private Batch batch;
     private ShapeRenderer shapeRenderer;
 
@@ -99,7 +100,7 @@ public class GameBoard implements Screen {
         brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
 
 
-        inputHandler = new InputHandler(paddle, ballManager);
+        inputHandler = new InputHandler(paddle, ballManager, orthographicCamera);
 
 
         Gdx.input.setInputProcessor(inputHandler);

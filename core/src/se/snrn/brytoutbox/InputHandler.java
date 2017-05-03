@@ -1,7 +1,13 @@
 package se.snrn.brytoutbox;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
+import javafx.scene.Camera;
 import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.paddle.Paddle;
 
@@ -9,11 +15,17 @@ public class InputHandler implements InputProcessor{
 
     private Paddle paddle;
     private BallManager balls;
+    private OrthographicCamera orthographicCamera;
+    Vector3 mouseCoords;
 
-    public InputHandler(Paddle paddle, BallManager balls) {
+
+    public InputHandler(Paddle paddle, BallManager balls, OrthographicCamera orthographicCamera) {
 
         this.paddle = paddle;
         this.balls = balls;
+        this.orthographicCamera = orthographicCamera;
+        mouseCoords = new Vector3();
+
     }
 
     @Override
@@ -25,7 +37,7 @@ public class InputHandler implements InputProcessor{
             paddle.setMovingRight(true);
         }
         if(keycode == Input.Keys.SPACE){
-            GameBoard.paddle.release();
+            paddle.release();
         }
 
         return false;
@@ -49,11 +61,29 @@ public class InputHandler implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        mouseCoords.set(screenX, screenY, 0);
+        orthographicCamera.unproject(mouseCoords);
+        if(paddle.body.getFixtureList().get(0).testPoint(mouseCoords.x, mouseCoords.y)){
+            paddle.release();
+            return true;
+        }
+
+
+        if(screenX < Gdx.graphics.getWidth()/2){
+            System.out.println("left");
+            paddle.setMovingLeft(true);
+        }
+        if(screenX > Gdx.graphics.getWidth()/2){
+            System.out.println("right");
+            paddle.setMovingRight(true);
+        }
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        paddle.setMovingLeft(false);
+        paddle.setMovingRight(false);
         return false;
     }
 

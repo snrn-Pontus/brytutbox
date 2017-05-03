@@ -60,7 +60,7 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         x = 0;
         y = 0;
         for (int i = 0; i < 6; i++) {
-            sprites.add(new Sprite(new Texture(Gdx.files.internal("gfx/brick_" + i + ".png"))));
+            sprites.add(new Sprite(new Texture(Gdx.files.internal("gfx/bricks/brick_" + i + ".png"))));
 
         }
 
