@@ -21,8 +21,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     private Sprite sprite;
     private int x;
     private int y;
-    private int centerX;
-    private int centerY;
 
     Body body;
     Paddle paddle;
@@ -42,8 +40,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
         type = BALL;
 
-        centerX = x + 16;
-        centerY = y + 16;
 
         body = Box2DFactory.createCircleBody(x, y, 16, this);
 
@@ -70,6 +66,12 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
     @Override
     public void update(float delta) {
+
+        if(body.getPosition().y < 0){
+            System.out.println("Lost");
+            lost = true;
+        }
+
         if (stuck) {
             body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y + BALL_SIZE / PPM, 0);
         }

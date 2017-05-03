@@ -13,6 +13,7 @@ import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
 
+import static se.snrn.brytoutbox.GameBoard.PPM;
 import static se.snrn.brytoutbox.physics.Types.PADDLE;
 
 public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
@@ -54,10 +55,10 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
             body.setLinearVelocity(0, 0);
         }
 
-        if (movingLeft) {
+        if (movingLeft && body.getPosition().x > 0+1.5f) {
             body.setLinearVelocity(-20, 0);
         }
-        if (movingRight) {
+        if (movingRight && body.getPosition().x < Gdx.graphics.getWidth()/PPM -1.5f) {
             body.setLinearVelocity(+20, 0);
         }
         sprite.setPosition(body.getPosition().x-1.5f, body.getPosition().y-0.25f);

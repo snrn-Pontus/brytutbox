@@ -12,12 +12,13 @@ public class BallManager implements Updateable, Renderable {
     private ArrayList<Ball> balls;
     private ArrayList<Ball> ballsToRemove;
     private ArrayList<Ball> ballsToAdd;
+    private int ballsLeft;
 
     public BallManager() {
         balls = new ArrayList<>();
         ballsToRemove = new ArrayList<>();
         ballsToAdd = new ArrayList<>();
-
+        ballsLeft = 3;
     }
 
     public void addBall(Ball ball) {
@@ -46,6 +47,6 @@ public class BallManager implements Updateable, Renderable {
     }
 
     public int getNumberOfBalls() {
-        return balls.size();
+        return ballsLeft;
     }
 }

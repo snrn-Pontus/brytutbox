@@ -84,7 +84,7 @@ public class GameBoard implements Screen {
         Box2DFactory.createRectangleBody(WIDTH + 4, HEIGHT / 2, 8, HEIGHT, new Object());
 
         Box2DFactory.createRectangleBody(WIDTH / 2, HEIGHT + 4, WIDTH, 8, new Object());
-        Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
+        //Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
 
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
