@@ -10,12 +10,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import se.snrn.brytoutbox.ball.Ball;
+import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
-import se.snrn.brytoutbox.persistance.ScoreReceiver;
-import se.snrn.brytoutbox.ui.BallManager;
+import se.snrn.brytoutbox.paddle.Paddle;
+import se.snrn.brytoutbox.physics.Box2DFactory;
+import se.snrn.brytoutbox.physics.CollisionHandler;
 import se.snrn.brytoutbox.ui.Ui;
 
 
@@ -36,8 +39,8 @@ public class GameBoard implements Screen {
     private BrickPool brickPool;
     public static int PPM = 32;
 
-    private static final int WIDTH = 640;
-    private static final int HEIGHT = 480;
+    private static final int WIDTH = Gdx.graphics.getWidth();
+    private static final int HEIGHT = Gdx.graphics.getHeight();
 
     public static EffectManager effectManager;
     private Batch uiBatch;
@@ -64,13 +67,9 @@ public class GameBoard implements Screen {
 
         ballManager = new BallManager();
         Ball ball = new Ball();
-        Ball ball2 = new Ball();
-        ball2.body.applyLinearImpulse(0, 1, 0, 0, true);
         ballManager.addBall(ball);
-        ballManager.addBall(ball2);
         ball.setStuck(true);
         paddle.setStuckBall(ball);
-        ballManager.addBall(new Ball());
 
 
         ui = new Ui(score, ballManager);
@@ -106,8 +105,8 @@ public class GameBoard implements Screen {
         Gdx.input.setInputProcessor(inputHandler);
 
 
-        ScoreReceiver scoreReceiver = new ScoreReceiver();
-        Score score = scoreReceiver.getScore();
+        //ScoreReceiver scoreReceiver = new ScoreReceiver();
+        //Score score = scoreReceiver.getScore();
     }
 
     @Override

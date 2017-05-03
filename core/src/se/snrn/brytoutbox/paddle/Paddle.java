@@ -1,4 +1,4 @@
-package se.snrn.brytoutbox;
+package se.snrn.brytoutbox.paddle;
 
 
 import com.badlogic.gdx.Gdx;
@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
+import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.ball.Ball;
+import se.snrn.brytoutbox.physics.Box2DFactory;
+import se.snrn.brytoutbox.physics.Collidable;
+import se.snrn.brytoutbox.physics.Types;
 
-import static se.snrn.brytoutbox.Types.PADDLE;
+import static se.snrn.brytoutbox.physics.Types.PADDLE;
 
 public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
 
@@ -18,7 +23,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
 
     private boolean movingLeft;
     private boolean movingRight;
-    Body body;
+    public Body body;
     private Types type;
     private Ball stuckBall;
 

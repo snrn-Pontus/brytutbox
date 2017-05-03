@@ -1,7 +1,8 @@
-package se.snrn.brytoutbox;
+package se.snrn.brytoutbox.physics;
 
 
 import com.badlogic.gdx.physics.box2d.*;
+import se.snrn.brytoutbox.GameBoard;
 
 public class Box2DFactory {
 

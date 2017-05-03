@@ -1,12 +1,13 @@
-package se.snrn.brytoutbox;
+package se.snrn.brytoutbox.physics;
 
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import se.snrn.brytoutbox.GameBoard;
 
-import static se.snrn.brytoutbox.Types.WALL;
+import static se.snrn.brytoutbox.physics.Types.WALL;
 
 public class Wall implements Collidable{
 

@@ -1,4 +1,4 @@
-package se.snrn.brytoutbox;
+package se.snrn.brytoutbox.physics;
 
 
 public enum Types {

@@ -1,8 +1,7 @@
-package se.snrn.brytoutbox.ui;
+package se.snrn.brytoutbox.ball;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import se.snrn.brytoutbox.Ball;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 
@@ -44,5 +43,9 @@ public class BallManager implements Updateable, Renderable {
         for (Ball ball : balls) {
             ball.render(batch);
         }
+    }
+
+    public int getNumberOfBalls() {
+        return balls.size();
     }
 }

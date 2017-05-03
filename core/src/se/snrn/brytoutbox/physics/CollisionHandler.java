@@ -1,6 +1,8 @@
-package se.snrn.brytoutbox;
+package se.snrn.brytoutbox.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
+import se.snrn.brytoutbox.Updateable;
+import se.snrn.brytoutbox.physics.Collidable;
 
 
 public class CollisionHandler implements Updateable {

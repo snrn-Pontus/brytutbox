@@ -2,9 +2,8 @@ package se.snrn.brytoutbox;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import se.snrn.brytoutbox.ui.BallManager;
-
-import java.util.ArrayList;
+import se.snrn.brytoutbox.ball.BallManager;
+import se.snrn.brytoutbox.paddle.Paddle;
 
 public class InputHandler implements InputProcessor{
 

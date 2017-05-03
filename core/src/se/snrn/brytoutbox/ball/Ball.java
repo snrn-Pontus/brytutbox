@@ -1,4 +1,4 @@
-package se.snrn.brytoutbox;
+package se.snrn.brytoutbox.ball;
 
 
 import com.badlogic.gdx.Gdx;
@@ -7,9 +7,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
+import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.paddle.Paddle;
+import se.snrn.brytoutbox.physics.Box2DFactory;
+import se.snrn.brytoutbox.physics.Collidable;
+import se.snrn.brytoutbox.physics.Types;
 
 import static se.snrn.brytoutbox.GameBoard.PPM;
-import static se.snrn.brytoutbox.Types.BALL;
+import static se.snrn.brytoutbox.physics.Types.BALL;
 
 public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
