@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class BrytUtBox extends Game {
-    SpriteBatch batch;
-    GameBoard gameBoard;
-    ShapeRenderer shapeRenderer;
+    private SpriteBatch batch;
+    private GameBoard gameBoard;
+    private ShapeRenderer shapeRenderer;
 
     @Override
     public void create() {

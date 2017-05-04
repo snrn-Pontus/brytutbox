@@ -55,7 +55,7 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     }
 
     public Brick() {
-        sprites = new ArrayList<Sprite>();
+        sprites = new ArrayList<>();
 
         x = 0;
         y = 0;

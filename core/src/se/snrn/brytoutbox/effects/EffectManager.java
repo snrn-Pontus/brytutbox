@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class EffectManager implements Updateable, Renderable{
 
-    ArrayList<Effect> effects;
+    private ArrayList<Effect> effects;
     private ArrayList<Effect> effectsToRemove;
     private ArrayList<Effect> effectsToAdd;
 

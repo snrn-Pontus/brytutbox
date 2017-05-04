@@ -1,11 +1,9 @@
 package se.snrn.brytoutbox.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
-import se.snrn.brytoutbox.Updateable;
-import se.snrn.brytoutbox.physics.Collidable;
 
 
-public class CollisionHandler implements Updateable {
+public class CollisionHandler {
 
 
     public CollisionHandler(World world) {
@@ -19,7 +17,6 @@ public class CollisionHandler implements Updateable {
                     ((Collidable) contact.getFixtureA().getUserData()).hit((Collidable) contact.getFixtureB().getUserData());
                     ((Collidable) contact.getFixtureB().getUserData()).hit((Collidable) contact.getFixtureB().getUserData());
                 }
-
 
 
             }
@@ -40,12 +37,4 @@ public class CollisionHandler implements Updateable {
             }
         });
     }
-
-    @Override
-    public void update(float delta) {
-
-
-    }
-
-
 }

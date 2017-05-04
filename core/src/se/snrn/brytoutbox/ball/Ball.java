@@ -25,11 +25,11 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     private int y;
 
     public Body body;
-    Paddle paddle;
+    private Paddle paddle;
     private boolean lost;
     private boolean stuck;
 
-    public static int BALL_SIZE = 32;
+    private static int BALL_SIZE = 32;
     private Types type;
     private float minSpeed = 10;
     private float maxSpeed = 10;
@@ -81,6 +81,8 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     public void update(float delta) {
 
 
+        ballTrail.update(delta);
+
         if (!stuck) {
             body.setLinearVelocity(body.getLinearVelocity().clamp(minSpeed, maxSpeed));
         }
@@ -99,6 +101,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
     @Override
     public void render(Batch batch) {
+        ballTrail.render(batch);
         sprite.draw(batch);
     }
 

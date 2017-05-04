@@ -9,13 +9,11 @@ import se.snrn.brytoutbox.GameBoard;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 
-import static se.snrn.brytoutbox.GameBoard.PPM;
-
 public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     private Brick[][] bricks;
     private int bottom;
-    Pool<Brick> brickPool;
+    private Pool<Brick> brickPool;
 
 
     public BrickGrid(int[][] map, BrickPool brickPool) {
@@ -55,10 +53,10 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     @Override
     public void render(Batch batch) {
-        for (int x = 0; x < bricks.length; x++) {
-            for (int y = 0; y < bricks[x].length; y++) {
-                if (bricks[x] != null && bricks[x][y] != null) {
-                    bricks[x][y].render(batch);
+        for (Brick[] brick : bricks) {
+            for (Brick aBrick : brick) {
+                if (aBrick != null) {
+                    aBrick.render(batch);
                 }
             }
         }
@@ -66,10 +64,10 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     @Override
     public void drawDebug(ShapeRenderer shapeRenderer) {
-        for (int x = 0; x < bricks.length; x++) {
-            for (int y = 0; y < bricks[x].length; y++) {
-                if (bricks[x] != null && bricks[x][y] != null) {
-                    bricks[x][y].drawDebug(shapeRenderer);
+        for (Brick[] brick : bricks) {
+            for (Brick aBrick : brick) {
+                if (aBrick != null) {
+                    aBrick.drawDebug(shapeRenderer);
                 }
             }
         }

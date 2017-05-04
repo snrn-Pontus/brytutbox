@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.JsonValue;
 
 public class MapLoader {
 
-    public static int emptyRows = 10;
+    private static int emptyRows = 10;
 
     public static int[][] getRandomGrid() {
         int[][] brickMap = new int[8][29];

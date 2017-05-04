@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.brytoutbox.Renderable;
-import se.snrn.brytoutbox.Score;
 import se.snrn.brytoutbox.Updateable;
 import se.snrn.brytoutbox.ball.BallManager;
 

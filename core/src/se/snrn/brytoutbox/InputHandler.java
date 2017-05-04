@@ -5,18 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.QueryCallback;
-import javafx.scene.Camera;
 import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.paddle.Paddle;
 
-public class InputHandler implements InputProcessor{
+class InputHandler implements InputProcessor{
 
     private Paddle paddle;
     private BallManager balls;
     private OrthographicCamera orthographicCamera;
-    Vector3 mouseCoords;
+    private Vector3 mouseCoords;
 
 
     public InputHandler(Paddle paddle, BallManager balls, OrthographicCamera orthographicCamera) {
