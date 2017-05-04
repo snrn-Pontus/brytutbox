@@ -24,7 +24,6 @@ public class HitEffect implements Effect {
     @Override
     public void update(float delta) {
         p.setPosition(x,y);
-        System.out.println("hit effect");
         p.update(delta);
     }
 

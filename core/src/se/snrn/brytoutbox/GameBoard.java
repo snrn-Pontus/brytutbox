@@ -16,6 +16,7 @@ import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
 import se.snrn.brytoutbox.maps.MapLoader;
+import se.snrn.brytoutbox.maps.MapReader;
 import se.snrn.brytoutbox.paddle.Paddle;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.CollisionHandler;
@@ -63,6 +64,8 @@ public class GameBoard implements Screen {
         world = new World(gravity, true);
 
 
+
+
         paddle = new Paddle();
 
         ballManager = new BallManager();
@@ -96,7 +99,10 @@ public class GameBoard implements Screen {
 
         //brickGrid = new BrickGrid(MapLoader.getLevel(2), brickPool);
 
-        brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
+        MapReader mapReader = new MapReader();
+        brickGrid = new BrickGrid( mapReader.readMapImage(), brickPool);
+
+        //brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
 
 
         inputHandler = new InputHandler(paddle, ballManager, orthographicCamera);
