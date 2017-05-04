@@ -68,11 +68,12 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     public void release() {
         stuck = false;
         if (paddle.isMovingLeft()) {
-            body.setLinearVelocity(-maxSpeed/2, maxSpeed/2);
+            body.setLinearVelocity(-maxSpeed / 2, maxSpeed / 2);
         } else if (paddle.isMovingRight()) {
-            body.setLinearVelocity(maxSpeed/2, maxSpeed/2);
+            body.setLinearVelocity(maxSpeed / 2, maxSpeed / 2);
+        } else {
+            body.setLinearVelocity(maxSpeed / 2, maxSpeed / 2);
         }
-
     }
 
 
