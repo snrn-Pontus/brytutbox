@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import se.snrn.brytoutbox.*;
 import se.snrn.brytoutbox.paddle.Paddle;
@@ -29,6 +30,8 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
     public static int BALL_SIZE = 32;
     private Types type;
+    private float minSpeed = 10;
+    private float maxSpeed = 10;
 
     public Ball() {
         sprite = new Sprite(new Texture(Gdx.files.internal("gfx/ball.png")));
@@ -46,7 +49,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         sprite.setSize(BALL_SIZE / PPM, BALL_SIZE / PPM);
 
     }
-
 
 
     public boolean isStuck() {
@@ -67,7 +69,17 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     @Override
     public void update(float delta) {
 
-        if(body.getPosition().y < 0){
+        Vector2 vel = body.getLinearVelocity();
+
+        vel.clamp(minSpeed, maxSpeed);
+
+        System.out.println(vel.len());
+
+        if(!stuck) {
+            body.setLinearVelocity(vel);
+        }
+
+        if (body.getPosition().y < 0) {
             System.out.println("Lost");
             lost = true;
         }
