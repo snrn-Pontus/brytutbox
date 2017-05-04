@@ -103,4 +103,12 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
     public void setStuckBall(Ball stuckBall) {
         this.stuckBall = stuckBall;
     }
+
+    public boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    public boolean isMovingRight() {
+        return movingRight;
+    }
 }
