@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.effects.HitEffect;
 import se.snrn.brytoutbox.effects.ScoreFloater;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
@@ -120,6 +121,7 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
             strength--;
             GameBoard.score.increaseMultiplier(1);
             GameBoard.score.addScore(100);
+            GameBoard.effectManager.addEffect(new HitEffect(body.getPosition().x, body.getPosition().y));
             GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x,body.getPosition().y,100*GameBoard.score.getMultiplier()));
             sprite = sprites.get(strength);
             sprite.setSize(64/PPM, 32/PPM);
