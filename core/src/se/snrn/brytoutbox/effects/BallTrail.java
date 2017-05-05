@@ -15,7 +15,7 @@ public class BallTrail implements Updateable, Renderable {
     public BallTrail(Ball ball) {
         this.ball = ball;
         p = new ParticleEffect();
-        p.load(Gdx.files.internal("effects/trail2.particle"), Gdx.files.internal("gfx"));
+        p.load(Gdx.files.internal("effects/trail.particle"), Gdx.files.internal("gfx"));
         p.scaleEffect(0.03125f);
 
     }

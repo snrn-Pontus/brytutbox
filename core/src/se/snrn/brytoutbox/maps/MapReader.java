@@ -26,7 +26,6 @@ public class MapReader {
                 int val = pixmap.getPixel(i, pixmap.getHeight() - j - 1);
                 Color.rgba8888ToColor(color, val);
 
-                System.out.println(color);
 
                 if (color.equals(Color.WHITE)) {
                     map[i][j] = 0;
