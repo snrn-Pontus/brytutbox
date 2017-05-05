@@ -8,17 +8,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 
-import static se.snrn.brytoutbox.GameBoard.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
 
 public class BrickGridPreview implements Updateable, Renderable {
 
     private Sprite[][] bricks;
+    private int[][] map;
+    private int number;
 
 
     public BrickGridPreview(int[][] map) {
 
 
         bricks = new Sprite[map.length][map[0].length];
+        this.map = map;
+        this.number = number;
 
         int bottom = 0;
         for (int x = 0; x < map.length; x++) {
@@ -60,4 +64,7 @@ public class BrickGridPreview implements Updateable, Renderable {
     }
 
 
+    public int getNumber() {
+        return number;
+    }
 }

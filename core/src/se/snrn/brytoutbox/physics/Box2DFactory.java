@@ -4,13 +4,15 @@ package se.snrn.brytoutbox.physics;
 import com.badlogic.gdx.physics.box2d.*;
 import se.snrn.brytoutbox.GameBoard;
 
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
+
 public class Box2DFactory {
 
 
     public static Body createCircleBody(float x, float y, float radius, Object object) {
-        x /= GameBoard.PPM;
-        y /= GameBoard.PPM;
-        radius /= GameBoard.PPM;
+        x /= PPM;
+        y /= PPM;
+        radius /= PPM;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x, y);
@@ -36,11 +38,12 @@ public class Box2DFactory {
         return body;
 
     }
-    public static Body createRectangleBody(float x, float y, float width, float height, Object object){
-        x /= GameBoard.PPM;
-        y /= GameBoard.PPM;
-        width /= GameBoard.PPM;
-        height /= GameBoard.PPM;
+
+    public static Body createRectangleBody(float x, float y, float width, float height, Object object) {
+        x /= PPM;
+        y /= PPM;
+        width /= PPM;
+        height /= PPM;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
@@ -62,7 +65,6 @@ public class Box2DFactory {
         rectangle.dispose();
         return body;
     }
-
 
 
 }

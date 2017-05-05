@@ -15,11 +15,8 @@ import se.snrn.brytoutbox.effects.ScoreFloater;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
-import se.snrn.brytoutbox.physics.Wall;
 
-import java.util.ArrayList;
-
-import static se.snrn.brytoutbox.GameBoard.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
 import static se.snrn.brytoutbox.physics.Types.BRICK;
 
 public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable, Collidable {

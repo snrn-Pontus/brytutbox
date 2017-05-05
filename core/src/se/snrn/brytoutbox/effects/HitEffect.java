@@ -3,9 +3,8 @@ package se.snrn.brytoutbox.effects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import se.snrn.brytoutbox.ball.Ball;
 
-import static se.snrn.brytoutbox.GameBoard.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
 
 
 public class HitEffect implements Effect {

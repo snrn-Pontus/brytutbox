@@ -13,7 +13,8 @@ import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
 
-import static se.snrn.brytoutbox.GameBoard.PPM;
+
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
 import static se.snrn.brytoutbox.GameBoard.score;
 import static se.snrn.brytoutbox.physics.Types.PADDLE;
 

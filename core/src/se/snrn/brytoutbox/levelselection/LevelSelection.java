@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import se.snrn.brytoutbox.levelselection.BrickGridPreview;
+import se.snrn.brytoutbox.BrytUtBox;
 import se.snrn.brytoutbox.maps.MapReader;
 
-import static se.snrn.brytoutbox.GameBoard.PPM;
+
+import static se.snrn.brytoutbox.BrytUtBox.HEIGHT;
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.WIDTH;
 
 
 public class LevelSelection implements Screen {
-
-
 
 
     private BrickGridPreview brickGridPreview;
@@ -25,20 +25,22 @@ public class LevelSelection implements Screen {
 
     private Batch batch;
     private Batch uiBatch;
+    private BrytUtBox brytUtBox;
 
-    private static final int WIDTH = Gdx.graphics.getWidth();
-    private static final int HEIGHT = Gdx.graphics.getHeight();
 
     private MapReader mapReader;
     private SelectionUi selectionUi;
+    private LevelSelectInputHandler inputHandler;
+    private int mapNumber;
 
 
-    public LevelSelection(Batch batch) {
+    public LevelSelection(Batch batch, SpriteBatch uiBatch, BrytUtBox brytUtBox) {
 
-
+        mapNumber = 1;
 
         this.batch = batch;
-        uiBatch = new SpriteBatch();
+        this.uiBatch = uiBatch;
+        this.brytUtBox = brytUtBox;
 
         selectionUi = new SelectionUi();
 
@@ -47,8 +49,9 @@ public class LevelSelection implements Screen {
 
 
         mapReader = new MapReader();
-        brickGridPreview = new BrickGridPreview(mapReader.readMapImage(1));
+        brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
 
+        inputHandler = new LevelSelectInputHandler(this);
 
     }
 
@@ -59,6 +62,7 @@ public class LevelSelection implements Screen {
 
         orthographicCamera.update();
         uiCamera.update();
+        Gdx.input.setInputProcessor(inputHandler);
 
 
     }
@@ -71,18 +75,9 @@ public class LevelSelection implements Screen {
 
         orthographicCamera.update();
         uiCamera.update();
-
-
-
-
-
-
-
-        batch.setProjectionMatrix(orthographicCamera.combined);
-
-
         brickGridPreview.update(delta);
 
+        batch.setProjectionMatrix(orthographicCamera.combined);
         batch.begin();
         brickGridPreview.render(batch);
         batch.end();
@@ -92,9 +87,6 @@ public class LevelSelection implements Screen {
         uiBatch.begin();
         selectionUi.render(uiBatch);
         uiBatch.end();
-
-
-
 
 
     }
@@ -124,8 +116,25 @@ public class LevelSelection implements Screen {
 
     }
 
-
-    public void changeLevel(int i) {
-        brickGridPreview = new BrickGridPreview(mapReader.readMapImage(i));
+    public void selectLevel() {
+        brytUtBox.selectLevel(mapNumber);
     }
+
+
+    public void nextLevel() {
+        int nextMap = mapNumber + 1;
+        if (Gdx.files.internal("maps/map_" + nextMap + ".bmp").exists()) {
+            mapNumber++;
+            brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
+        }
+    }
+
+    public void previousLevel() {
+        int prevMap = mapNumber - 1;
+        if (Gdx.files.internal("maps/map_" + prevMap + ".bmp").exists()) {
+            mapNumber--;
+            brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
+        }
+    }
+
 }
