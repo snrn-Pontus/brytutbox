@@ -10,7 +10,7 @@ public class MapReader {
         int[][] map = new int[8][29];
 
 
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("maps/map_"+mapNumber+".bmp"));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("maps/map_"+mapNumber+".png"));
 
 
         int width = pixmap.getWidth();

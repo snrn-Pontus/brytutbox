@@ -42,7 +42,7 @@ public class LevelSelection implements Screen {
         this.uiBatch = uiBatch;
         this.brytUtBox = brytUtBox;
 
-        selectionUi = new SelectionUi();
+        selectionUi = new SelectionUi(this);
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
         uiCamera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -123,7 +123,7 @@ public class LevelSelection implements Screen {
 
     public void nextLevel() {
         int nextMap = mapNumber + 1;
-        if (Gdx.files.internal("maps/map_" + nextMap + ".bmp").exists()) {
+        if (Gdx.files.internal("maps/map_" + nextMap + ".png").exists()) {
             mapNumber++;
             brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
         }
@@ -131,10 +131,13 @@ public class LevelSelection implements Screen {
 
     public void previousLevel() {
         int prevMap = mapNumber - 1;
-        if (Gdx.files.internal("maps/map_" + prevMap + ".bmp").exists()) {
+        if (Gdx.files.internal("maps/map_" + prevMap + ".png").exists()) {
             mapNumber--;
             brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
         }
     }
 
+    public int getMapNumber() {
+        return mapNumber;
+    }
 }

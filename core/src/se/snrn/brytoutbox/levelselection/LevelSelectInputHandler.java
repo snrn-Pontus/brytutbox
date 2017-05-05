@@ -16,10 +16,10 @@ public class LevelSelectInputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.LEFT || keycode == Input.Keys.A){
-            levelSelection.nextLevel();
+            levelSelection.previousLevel();
         }
         if(keycode == Input.Keys.RIGHT || keycode == Input.Keys.D){
-            levelSelection.previousLevel();
+            levelSelection.nextLevel();
         }
         if(keycode == Input.Keys.SPACE){
             levelSelection.selectLevel();
