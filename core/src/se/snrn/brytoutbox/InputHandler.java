@@ -11,15 +11,13 @@ import se.snrn.brytoutbox.paddle.Paddle;
 class InputHandler implements InputProcessor{
 
     private Paddle paddle;
-    private BallManager balls;
     private OrthographicCamera orthographicCamera;
     private Vector3 mouseCoords;
 
 
-    public InputHandler(Paddle paddle, BallManager balls, OrthographicCamera orthographicCamera) {
+    public InputHandler(Paddle paddle, OrthographicCamera orthographicCamera) {
 
         this.paddle = paddle;
-        this.balls = balls;
         this.orthographicCamera = orthographicCamera;
         mouseCoords = new Vector3();
 
@@ -36,6 +34,9 @@ class InputHandler implements InputProcessor{
         if(keycode == Input.Keys.SPACE){
             paddle.release();
         }
+
+
+
 
         return false;
     }

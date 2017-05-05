@@ -15,7 +15,6 @@ import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
-import se.snrn.brytoutbox.maps.MapLoader;
 import se.snrn.brytoutbox.maps.MapReader;
 import se.snrn.brytoutbox.paddle.Paddle;
 import se.snrn.brytoutbox.physics.Box2DFactory;
@@ -48,11 +47,15 @@ public class GameBoard implements Screen {
     private BallManager ballManager;
     private Ui ui;
     public static Score score;
+    private MapReader mapReader;
+    private BrickPool brickPool;
+    private Vector2 gravity;
+
 
     public GameBoard(Batch batch, ShapeRenderer shapeRenderer) {
 
         score = new Score();
-        BrickPool brickPool = new BrickPool();
+        brickPool = new BrickPool();
 
 
         this.batch = batch;
@@ -60,10 +63,8 @@ public class GameBoard implements Screen {
         this.shapeRenderer = shapeRenderer;
 
 
-        Vector2 gravity = new Vector2(0, 0);
+        gravity = new Vector2(0, 0);
         world = new World(gravity, true);
-
-
 
 
         paddle = new Paddle();
@@ -97,15 +98,12 @@ public class GameBoard implements Screen {
 
         collisionHandler = new CollisionHandler(world);
 
-        //brickGrid = new BrickGrid(MapLoader.getLevel(2), brickPool);
-
-        MapReader mapReader = new MapReader();
-        brickGrid = new BrickGrid( mapReader.readMapImage(), brickPool);
-
-        //brickGrid = new BrickGrid(MapLoader.getRandomGrid(), brickPool);
+        mapReader = new MapReader();
+        brickGrid = new BrickGrid(mapReader.readMapImage(1), brickPool);
 
 
-        inputHandler = new InputHandler(paddle, ballManager, orthographicCamera);
+
+        inputHandler = new InputHandler(paddle, orthographicCamera);
 
 
         Gdx.input.setInputProcessor(inputHandler);

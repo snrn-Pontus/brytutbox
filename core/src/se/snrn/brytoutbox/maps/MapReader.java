@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.Pixmap;
 
 public class MapReader {
 
-    public int[][] readMapImage() {
+    public int[][] readMapImage(int mapNumber) {
         int[][] map = new int[8][29];
 
 
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("maps/map_1.bmp"));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("maps/map_"+mapNumber+".bmp"));
 
 
         int width = pixmap.getWidth();

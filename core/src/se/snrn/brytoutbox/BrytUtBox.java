@@ -3,10 +3,12 @@ package se.snrn.brytoutbox;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import se.snrn.brytoutbox.levelselection.LevelSelection;
 
 public class BrytUtBox extends Game {
     private SpriteBatch batch;
     private GameBoard gameBoard;
+    private LevelSelection levelSelection;
     private ShapeRenderer shapeRenderer;
 
     @Override
@@ -14,7 +16,8 @@ public class BrytUtBox extends Game {
         shapeRenderer = new ShapeRenderer();
         batch = new SpriteBatch();
         gameBoard = new GameBoard(batch, shapeRenderer);
-        setScreen(gameBoard);
+        levelSelection = new LevelSelection(batch);
+        setScreen(levelSelection);
     }
 
     @Override

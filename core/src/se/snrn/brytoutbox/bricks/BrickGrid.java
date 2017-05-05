@@ -20,7 +20,6 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
         this.brickPool = brickPool;
 
 
-
         bricks = new Brick[map.length][map[0].length];
 
         bottom = 0;
@@ -41,7 +40,7 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
                 if (bricks[x] != null && bricks[x][y] != null) {
 
                     bricks[x][y].update(delta);
-                    if(bricks[x][y].isDestroyed()) {
+                    if (bricks[x][y].isDestroyed()) {
                         GameBoard.world.destroyBody(bricks[x][y].body);
                         bricks[x][y] = null;
                     }
