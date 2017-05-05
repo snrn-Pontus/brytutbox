@@ -16,6 +16,7 @@ public class CollisionHandler {
                 if (contact.getFixtureA().getUserData() instanceof Collidable && contact.getFixtureB().getUserData() instanceof Collidable) {
                     ((Collidable) contact.getFixtureA().getUserData()).hit((Collidable) contact.getFixtureB().getUserData());
                     ((Collidable) contact.getFixtureB().getUserData()).hit((Collidable) contact.getFixtureB().getUserData());
+
                 }
 
 

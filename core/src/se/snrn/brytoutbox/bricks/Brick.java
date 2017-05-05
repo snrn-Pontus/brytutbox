@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.effects.HitEffect;
 import se.snrn.brytoutbox.effects.ScoreFloater;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
+import se.snrn.brytoutbox.physics.Wall;
 
 import java.util.ArrayList;
 
@@ -50,9 +52,9 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         this.y = y;
         sprite = sprites.get(strength);
 
-        body = Box2DFactory.createRectangleBody(x,y,64, 32, this);
+        body = Box2DFactory.createRectangleBody(x, y, 64, 32, this);
 
-        sprite.setSize(64/PPM, 32/PPM);
+        sprite.setSize(64 / PPM, 32 / PPM);
     }
 
     public Brick() {
@@ -82,13 +84,13 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     @Override
     public void update(float delta) {
 
-        if(strength <= 0) {
+        if (strength <= 0) {
             destroyed = true;
         }
 
-        body.setTransform((x+32)/PPM,(y+16)/PPM,0);
+        body.setTransform((x + 32) / PPM, (y + 16) / PPM, 0);
 
-        sprite.setPosition(body.getPosition().x-1, body.getPosition().y-0.5f);
+        sprite.setPosition(body.getPosition().x - 1, body.getPosition().y - 0.5f);
 
     }
 
@@ -117,14 +119,18 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
     @Override
     public void hit(Collidable collidable) {
+        float angle = -90;
         if (strength != 0) {
             strength--;
             GameBoard.score.increaseMultiplier(1);
             GameBoard.score.addScore(100);
-            GameBoard.effectManager.addEffect(new HitEffect(body.getPosition().x, body.getPosition().y));
-            GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x,body.getPosition().y,100*GameBoard.score.getMultiplier()));
+            if(collidable instanceof Ball){
+                angle = ((Ball) collidable).body.getLinearVelocity().angle()-180;
+            }
+            GameBoard.effectManager.addEffect(new HitEffect(body.getPosition().x, body.getPosition().y,angle));
+            GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x, body.getPosition().y, 100 * GameBoard.score.getMultiplier()));
             sprite = sprites.get(strength);
-            sprite.setSize(64/PPM, 32/PPM);
+            sprite.setSize(64 / PPM, 32 / PPM);
 
         }
     }

@@ -23,7 +23,6 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
 
         bricks = new Brick[map.length][map[0].length];
 
-        //bottom = Gdx.graphics.getHeight() - 32*10;
         bottom = 0;
         for (int x = 0; x < map.length; x++) {
             for (int y = 0; y < map[x].length; y++) {
