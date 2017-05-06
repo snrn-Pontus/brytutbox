@@ -15,7 +15,7 @@ import se.snrn.brytoutbox.physics.Types;
 
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
-import static se.snrn.brytoutbox.GameBoard.score;
+
 import static se.snrn.brytoutbox.physics.Types.PADDLE;
 
 public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
@@ -87,7 +87,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
 
     @Override
     public void hit(Collidable collidable) {
-        score.resetMultiplier();
+        BrytUtBox.gameState.getScore().resetMultiplier();
     }
 
     @Override

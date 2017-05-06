@@ -43,15 +43,13 @@ public class GameBoard implements Screen {
     private Batch uiBatch;
     private BallManager ballManager;
     private Ui ui;
-    public static Score score;
     private MapReader mapReader;
     private BrickPool brickPool;
     private Vector2 gravity;
 
 
-    public GameBoard(Batch batch, SpriteBatch uiBatch) {
+    public GameBoard(Batch batch, SpriteBatch uiBatch, int levelNumber) {
 
-        score = new Score();
         brickPool = new BrickPool();
 
 
@@ -66,13 +64,10 @@ public class GameBoard implements Screen {
         paddle = new Paddle();
 
         ballManager = new BallManager();
-        Ball ball = new Ball();
-        ballManager.addBall(ball);
-        ball.setStuck(true);
-        paddle.setStuckBall(ball);
 
 
-        ui = new Ui(score, ballManager);
+
+        ui = new Ui(BrytUtBox.gameState);
 
 
         effectManager = new EffectManager();
@@ -83,7 +78,7 @@ public class GameBoard implements Screen {
         Box2DFactory.createRectangleBody(WIDTH + 4, HEIGHT / 2, 8, HEIGHT, new Object());
 
         Box2DFactory.createRectangleBody(WIDTH / 2, HEIGHT + 4, WIDTH, 8, new Object());
-        Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
+       // Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
 
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
@@ -93,7 +88,7 @@ public class GameBoard implements Screen {
         collisionHandler = new CollisionHandler(world);
 
         mapReader = new MapReader();
-        brickGrid = new BrickGrid(mapReader.readMapImage(1), brickPool);
+        brickGrid = new BrickGrid(mapReader.readMapImage(levelNumber), brickPool);
 
 
 

@@ -43,7 +43,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         y = 100;
 
         paddle = GameBoard.paddle;
-        stuck = false;
+        stuck = true;
 
         type = BALL;
 
@@ -54,6 +54,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         sprite.setSize(BALL_SIZE / PPM, BALL_SIZE / PPM);
         sprite.setOriginCenter();
 
+        paddle.setStuckBall(this);
     }
 
 
@@ -63,6 +64,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
     public void setStuck(boolean stuck) {
         this.stuck = stuck;
+
     }
 
     public void release() {

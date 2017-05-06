@@ -2,31 +2,43 @@ package se.snrn.brytoutbox.ball;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.brytoutbox.BrytUtBox;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 
 import java.util.ArrayList;
+
+import static se.snrn.brytoutbox.GameBoard.paddle;
 
 public class BallManager implements Updateable, Renderable {
 
     private ArrayList<Ball> balls;
     private ArrayList<Ball> ballsToRemove;
     private ArrayList<Ball> ballsToAdd;
-    private int ballsLeft;
+
 
     public BallManager() {
         balls = new ArrayList<>();
         ballsToRemove = new ArrayList<>();
         ballsToAdd = new ArrayList<>();
-        ballsLeft = 3;
     }
 
     public void addBall(Ball ball) {
         ballsToAdd.add(ball);
     }
 
+    public void spawnNewBall(){
+        Ball ball = new Ball();
+        addBall(ball);
+
+    }
+
     @Override
     public void update(float delta) {
+        if(balls.isEmpty() && BrytUtBox.gameState.getBallsLeft() > 0) {
+            spawnNewBall();
+            BrytUtBox.gameState.decreaseBallsLeft();
+        }
         balls.addAll(ballsToAdd);
         ballsToAdd.clear();
         balls.removeAll(ballsToRemove);
@@ -44,9 +56,5 @@ public class BallManager implements Updateable, Renderable {
         for (Ball ball : balls) {
             ball.render(batch);
         }
-    }
-
-    public int getNumberOfBalls() {
-        return ballsLeft;
     }
 }
