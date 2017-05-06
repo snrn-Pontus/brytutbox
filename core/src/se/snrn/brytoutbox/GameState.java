@@ -4,6 +4,7 @@ public class GameState {
 
     private int ballsLeft;
     private Score score;
+    private States state;
 
     public GameState() {
         score = new Score();
@@ -20,5 +21,9 @@ public class GameState {
 
     public void decreaseBallsLeft() {
         ballsLeft--;
+    }
+
+    public void setState(States state) {
+        this.state = state;
     }
 }

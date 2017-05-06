@@ -4,6 +4,7 @@ package se.snrn.brytoutbox.ball;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.brytoutbox.BrytUtBox;
 import se.snrn.brytoutbox.Renderable;
+import se.snrn.brytoutbox.States;
 import se.snrn.brytoutbox.Updateable;
 
 import java.util.ArrayList;
@@ -35,9 +36,13 @@ public class BallManager implements Updateable, Renderable {
 
     @Override
     public void update(float delta) {
-        if(balls.isEmpty() && BrytUtBox.gameState.getBallsLeft() > 0) {
-            spawnNewBall();
-            BrytUtBox.gameState.decreaseBallsLeft();
+        if (balls.isEmpty()) {
+            if (BrytUtBox.gameState.getBallsLeft() > 0) {
+                spawnNewBall();
+                BrytUtBox.gameState.decreaseBallsLeft();
+            } else {
+                BrytUtBox.gameState.setState(States.GAME_OVER);
+            }
         }
         balls.addAll(ballsToAdd);
         ballsToAdd.clear();
