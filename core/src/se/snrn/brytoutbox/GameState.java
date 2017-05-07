@@ -5,6 +5,7 @@ public class GameState {
     private int ballsLeft;
     private Score score;
     private States state;
+    private int bricksLeft;
 
     public GameState() {
         score = new Score();
@@ -25,5 +26,17 @@ public class GameState {
 
     public void setState(States state) {
         this.state = state;
+    }
+
+    public void setBricksLeft(int bricksLeft) {
+        this.bricksLeft = bricksLeft;
+    }
+
+    public int getBricksLeft() {
+        return bricksLeft;
+    }
+
+    public States getState() {
+        return state;
     }
 }

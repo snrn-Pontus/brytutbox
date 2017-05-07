@@ -11,7 +11,6 @@ public class BrytUtBox extends Game {
     private GameBoard gameBoard;
     private LevelSelection levelSelection;
     public static int PPM = 32;
-    public static States states;
     public static GameState gameState;
 
     public static int WIDTH;
@@ -36,6 +35,12 @@ public class BrytUtBox extends Game {
     @Override
     public void render() {
         super.render();
+        if(gameState.getState() == States.MAP_COMPLETED){
+            System.out.println("you won");
+        }
+        if(gameState.getState() == States.GAME_OVER){
+            System.out.println("Game over");
+        }
     }
 
     @Override

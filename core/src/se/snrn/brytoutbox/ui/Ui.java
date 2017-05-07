@@ -16,6 +16,7 @@ public class Ui implements Updateable, Renderable{
     private ScoreUi scoreUi;
     private Sprite uiBackground;
     private BallUi ballUi;
+    private BricksLeftUi bricksLeftUi;
 
     public Ui(GameState gameState) {
         uiBackground = new Sprite(new Texture(Gdx.files.internal("gfx/ui/background.png")));
@@ -25,6 +26,7 @@ public class Ui implements Updateable, Renderable{
 
         scoreUi = new ScoreUi(score, 16, Gdx.graphics.getHeight()-16);
         ballUi = new BallUi(gameState,64, Gdx.graphics.getHeight()-32 );
+        bricksLeftUi = new BricksLeftUi(gameState, 128, Gdx.graphics.getHeight()-16);
     }
 
 
@@ -39,5 +41,6 @@ public class Ui implements Updateable, Renderable{
         uiBackground.draw(batch);
         scoreUi.render(batch);
         ballUi.render(batch);
+        bricksLeftUi.render(batch);
     }
 }

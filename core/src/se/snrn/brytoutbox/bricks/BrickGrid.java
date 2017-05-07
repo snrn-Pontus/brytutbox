@@ -4,16 +4,14 @@ package se.snrn.brytoutbox.bricks;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Pool;
-import se.snrn.brytoutbox.Debuggable;
-import se.snrn.brytoutbox.GameBoard;
-import se.snrn.brytoutbox.Renderable;
-import se.snrn.brytoutbox.Updateable;
+import se.snrn.brytoutbox.*;
 
 public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     private Brick[][] bricks;
     private int bottom;
     private Pool<Brick> brickPool;
+    private int bricksLeft;
 
 
     public BrickGrid(int[][] map, BrickPool brickPool) {
@@ -35,18 +33,24 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     @Override
     public void update(float delta) {
+
+        bricksLeft = 0;
+
         for (int x = 0; x < bricks.length; x++) {
             for (int y = 0; y < bricks[x].length; y++) {
                 if (bricks[x] != null && bricks[x][y] != null) {
 
                     bricks[x][y].update(delta);
+                    bricksLeft++;
                     if (bricks[x][y].isDestroyed()) {
+
                         GameBoard.world.destroyBody(bricks[x][y].body);
                         bricks[x][y] = null;
                     }
                 }
             }
         }
+        BrytUtBox.gameState.setBricksLeft(bricksLeft);
     }
 
     @Override

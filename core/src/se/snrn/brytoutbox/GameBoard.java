@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.ball.BallManager;
@@ -17,6 +18,7 @@ import se.snrn.brytoutbox.maps.MapReader;
 import se.snrn.brytoutbox.paddle.Paddle;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.CollisionHandler;
+import se.snrn.brytoutbox.physics.Wall;
 import se.snrn.brytoutbox.ui.Ui;
 
 
@@ -46,9 +48,12 @@ public class GameBoard implements Screen {
     private MapReader mapReader;
     private BrickPool brickPool;
     private Vector2 gravity;
+    Box2DDebugRenderer box2DDebugRenderer;
 
 
     public GameBoard(Batch batch, SpriteBatch uiBatch, int levelNumber) {
+
+        box2DDebugRenderer = new Box2DDebugRenderer();
 
         brickPool = new BrickPool();
 
@@ -66,19 +71,16 @@ public class GameBoard implements Screen {
         ballManager = new BallManager();
 
 
-
         ui = new Ui(BrytUtBox.gameState);
 
 
         effectManager = new EffectManager();
 
 
+        Wall topWall = new Wall((WIDTH / PPM) / 2, (HEIGHT / PPM), WIDTH, 2);
 
-        Box2DFactory.createRectangleBody(-4, HEIGHT / 2, 8, HEIGHT, new Object());
-        Box2DFactory.createRectangleBody(WIDTH + 4, HEIGHT / 2, 8, HEIGHT, new Object());
-
-        Box2DFactory.createRectangleBody(WIDTH / 2, HEIGHT + 4, WIDTH, 8, new Object());
-       // Box2DFactory.createRectangleBody(WIDTH / 2, -4, WIDTH, 8, new Object());
+        Wall rightWall = new Wall(-0.5f, (HEIGHT / PPM) / 2, 1, HEIGHT/PPM);
+        Wall leftWall = new Wall((WIDTH / PPM)+0.5f, (HEIGHT / PPM) / 2, 1, HEIGHT/PPM);
 
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
@@ -89,7 +91,6 @@ public class GameBoard implements Screen {
 
         mapReader = new MapReader();
         brickGrid = new BrickGrid(mapReader.readMapImage(levelNumber), brickPool);
-
 
 
         inputHandler = new InputHandler(paddle, orthographicCamera);
@@ -105,7 +106,6 @@ public class GameBoard implements Screen {
         orthographicCamera.update();
         uiCamera.update();
         Gdx.input.setInputProcessor(inputHandler);
-
 
 
     }
@@ -131,9 +131,9 @@ public class GameBoard implements Screen {
 
         ui.update(delta);
 
+        box2DDebugRenderer.render(world, orthographicCamera.combined);
 
         batch.setProjectionMatrix(orthographicCamera.combined);
-
 
 
         batch.begin();

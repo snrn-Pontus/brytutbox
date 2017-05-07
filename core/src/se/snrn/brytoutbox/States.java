@@ -2,5 +2,5 @@ package se.snrn.brytoutbox;
 
 
 public enum States {
-    LEVEL_SELECTION, PLAYING, GAME_OVER
+    LEVEL_SELECTION, PLAYING, MAP_COMPLETED, GAME_OVER
 }

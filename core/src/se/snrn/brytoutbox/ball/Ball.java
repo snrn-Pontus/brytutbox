@@ -141,4 +141,8 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     public boolean isLost() {
         return lost;
     }
+
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
 }

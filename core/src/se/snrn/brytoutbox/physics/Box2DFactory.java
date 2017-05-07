@@ -26,7 +26,7 @@ public class Box2DFactory {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
+        fixtureDef.density = 1f;
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 1f;
 
