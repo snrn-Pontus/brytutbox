@@ -77,10 +77,10 @@ public class GameBoard implements Screen {
         effectManager = new EffectManager();
 
 
-        Wall topWall = new Wall((WIDTH / PPM) / 2, (HEIGHT / PPM), WIDTH, 2);
+        Wall topWall = new Wall(WIDTH / 2, HEIGHT-24, WIDTH, 16);
 
-        Wall rightWall = new Wall(-0.5f, (HEIGHT / PPM) / 2, 1, HEIGHT/PPM);
-        Wall leftWall = new Wall((WIDTH / PPM)+0.5f, (HEIGHT / PPM) / 2, 1, HEIGHT/PPM);
+        Wall leftWall = new Wall(-4, HEIGHT / 2, 8, HEIGHT);
+        Wall rightWall = new Wall(WIDTH-16 , HEIGHT / 2, 8, HEIGHT);
 
 
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);

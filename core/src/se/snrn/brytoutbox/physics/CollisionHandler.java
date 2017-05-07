@@ -9,6 +9,19 @@ public class CollisionHandler {
     public CollisionHandler(World world) {
 
 
+        world.setContactFilter(new ContactFilter() {
+            @Override
+            public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
+                if(fixtureA.getUserData() instanceof Collidable && fixtureB.getUserData() instanceof Collidable){
+                    if(((Collidable) fixtureA.getUserData()).getType() == Types.DEAD_BRICK ||
+                            ((Collidable) fixtureB.getUserData()).getType() == Types.DEAD_BRICK) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
+
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {

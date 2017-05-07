@@ -18,6 +18,7 @@ import se.snrn.brytoutbox.physics.Types;
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
 import static se.snrn.brytoutbox.physics.Types.BRICK;
+import static se.snrn.brytoutbox.physics.Types.DEAD_BRICK;
 
 public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable, Collidable {
 
@@ -50,7 +51,7 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
 
         body = Box2DFactory.createRectangleBody(x, y, 64, 32, this);
-
+        body.setTransform((x + 32) / PPM, (y + 16) / PPM, 0);
         sprite.setSize(64 / PPM, 32 / PPM);
     }
 
@@ -78,9 +79,16 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
         if (strength <= 0) {
             destroyed = true;
+
+            type = DEAD_BRICK;
+//            body.setType(BodyDef.BodyType.DynamicBody);
+//            body.applyLinearImpulse(0, -1, body.getWorldCenter().x, body.getWorldCenter().y, true);
+//            body.applyAngularImpulse(1,true);
+
+
         }
 
-        body.setTransform((x + 32) / PPM, (y + 16) / PPM, 0);
+        //body.setTransform((x + 32) / PPM, (y + 16) / PPM, 0);
 
         sprite.setPosition(body.getPosition().x - 1, body.getPosition().y - 0.5f);
 

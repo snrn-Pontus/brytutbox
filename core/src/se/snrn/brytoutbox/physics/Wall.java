@@ -1,10 +1,7 @@
 package se.snrn.brytoutbox.physics;
 
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import se.snrn.brytoutbox.GameBoard;
+import se.snrn.brytoutbox.ball.Ball;
 
 import static se.snrn.brytoutbox.physics.Types.WALL;
 
@@ -16,22 +13,21 @@ public class Wall implements Collidable{
 
         type = WALL;
 
+        Box2DFactory.createRectangleBody(x,y,width,height,this);
 
-        BodyDef groundBodyDef = new BodyDef();
-        groundBodyDef.position.set(x, y);
-
-        Body groundBody = GameBoard.world.createBody(groundBodyDef);
-
-        PolygonShape groundBox = new PolygonShape();
-
-        groundBox.setAsBox(width / 2, height / 2);
-        groundBody.createFixture(groundBox, 0.0f);
-        groundBox.dispose();
     }
 
     @Override
     public void hit(Collidable collidable) {
-
+        if(collidable instanceof Ball){
+            Ball ball = (Ball)collidable;
+            if(ball.body.getLinearVelocity().y == 0){
+                ball.body.setLinearVelocity(ball.getMaxSpeed()/2,ball.getMaxSpeed()/2);
+            }
+            if(ball.body.getLinearVelocity().x == 0){
+                ball.body.setLinearVelocity(ball.getMaxSpeed()/2,ball.getMaxSpeed()/2);
+            }
+        }
     }
 
     @Override

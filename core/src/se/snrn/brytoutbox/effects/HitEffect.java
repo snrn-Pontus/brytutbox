@@ -13,23 +13,22 @@ public class HitEffect implements Effect {
     private ParticleEffect p;
     private float angle;
 
-    public HitEffect(float x, float y,float angle) {
-        this.x = x*PPM;
-        this.y = y*PPM;
+    public HitEffect(float x, float y, float angle) {
+        this.x = x * PPM;
+        this.y = y * PPM;
         this.angle = angle;
         p = new ParticleEffect();
         p.load(Gdx.files.internal("effects/hit.particle"), Gdx.files.internal("effects"));
         p.start();
-        System.out.println(angle);
     }
 
     @Override
     public void update(float delta) {
         for (int i = 0; i < p.getEmitters().size; i++) { //get the list of emitters - things that emit particles
-            p.getEmitters().get(i).getAngle().setHighMax(angle+45); //high is the max rotation
-            p.getEmitters().get(i).getAngle().setHighMin(angle-45);
+            p.getEmitters().get(i).getAngle().setHighMax(angle + 45); //high is the max rotation
+            p.getEmitters().get(i).getAngle().setHighMin(angle - 45);
         }
-        p.setPosition(x,y);
+        p.setPosition(x, y);
         p.update(delta);
     }
 
