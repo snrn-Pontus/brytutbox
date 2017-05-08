@@ -37,8 +37,18 @@ public class GameOverUi implements Updateable, Renderable{
         drawable.setPatch(uiBackground);
         textField = new TextField("Text", new TextField.TextFieldStyle(new BitmapFont(), Color.BLACK, drawable,drawable,drawable));
 
+        textField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                if ((c == '\r' || c == '\n')){
+                    System.out.println(textField.getText());
+                }
+            }
+        });
+
         stage = new Stage();
         stage.addActor(textField);
+
 
 
     }
