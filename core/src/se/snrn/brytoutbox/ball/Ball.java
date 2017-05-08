@@ -21,8 +21,8 @@ import static se.snrn.brytoutbox.physics.Types.BALL;
 public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
     private Sprite sprite;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
     public Body body;
     private Paddle paddle;
@@ -38,11 +38,12 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     private BallType ballType;
 
 
-    public Ball(BallType ballType) {
+    public Ball(BallType ballType, float x, float y) {
         this.ballType = ballType;
         sprite = new Sprite(new Texture(Gdx.files.internal("gfx/ball.png")));
-        x = 50;
-        y = 100;
+
+        this.x = x*PPM;
+        this.y = y*PPM;
 
         paddle = GameBoard.paddle;
         stuck = true;
@@ -62,7 +63,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         ballTrail = new BallTrail(this);
 
 
-        body = Box2DFactory.createCircleBody(x, y, ballSize/2, this);
+        body = Box2DFactory.createCircleBody(this.x, this.y, ballSize/2, this);
         sprite.setSize(ballSize / PPM, ballSize / PPM);
         sprite.setOriginCenter();
 
@@ -126,11 +127,11 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     }
 
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 

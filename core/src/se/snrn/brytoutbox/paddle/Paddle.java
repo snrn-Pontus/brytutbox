@@ -13,6 +13,7 @@ import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
 import se.snrn.brytoutbox.physics.Wall;
+import se.snrn.brytoutbox.powerups.PowerUp;
 
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
@@ -88,6 +89,11 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
 
     @Override
     public void hit(Collidable collidable) {
+//        if (collidable instanceof PowerUp) {
+//            System.out.println("Powerup hit paddle");
+//            PowerUp powerUp = ((PowerUp) collidable);
+//            powerUp.getEffect().start();
+//        }
         Ball ball;
         if (collidable instanceof Ball) {
             ball = (Ball) collidable;

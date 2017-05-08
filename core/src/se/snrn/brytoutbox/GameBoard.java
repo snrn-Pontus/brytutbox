@@ -19,6 +19,7 @@ import se.snrn.brytoutbox.paddle.Paddle;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.CollisionHandler;
 import se.snrn.brytoutbox.physics.Wall;
+import se.snrn.brytoutbox.powerups.PowerUpManager;
 import se.snrn.brytoutbox.ui.Ui;
 
 
@@ -41,9 +42,10 @@ public class GameBoard implements Screen {
     private OrthographicCamera orthographicCamera;
     private OrthographicCamera uiCamera;
 
-    public static EffectManager effectManager;
     private Batch uiBatch;
     public static BallManager ballManager;
+    public static EffectManager effectManager;
+    public static PowerUpManager powerUpManager;
     private Ui ui;
     private MapReader mapReader;
     private BrickPool brickPool;
@@ -75,6 +77,8 @@ public class GameBoard implements Screen {
 
 
         effectManager = new EffectManager();
+
+        powerUpManager = new PowerUpManager();
 
 
         Wall topWall = new Wall(WIDTH / 2, HEIGHT-24, WIDTH, 16);
@@ -124,6 +128,7 @@ public class GameBoard implements Screen {
 
         paddle.update(delta);
         ballManager.update(delta);
+        powerUpManager.update(delta);
         brickGrid.update(delta);
 
 
@@ -140,6 +145,7 @@ public class GameBoard implements Screen {
         paddle.render(batch);
         brickGrid.render(batch);
         ballManager.render(batch);
+        powerUpManager.render(batch);
         batch.end();
 
 

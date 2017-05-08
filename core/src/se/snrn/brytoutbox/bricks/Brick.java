@@ -15,6 +15,7 @@ import se.snrn.brytoutbox.effects.ScoreFloater;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
+import se.snrn.brytoutbox.powerups.PowerUpEffect;
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
 import static se.snrn.brytoutbox.physics.Types.BRICK;
@@ -24,8 +25,6 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
     public static int BRICK_WIDTH = 64;
     public static int BRICK_HEIGHT = 32;
-    private BrickGrid brickGrid;
-
     private Sprite sprite;
     private float x;
     private float y;
@@ -34,13 +33,12 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     Body body;
     private Types type;
     private boolean destroyed;
+    private PowerUpEffect powerUpEffect;
 
-    public boolean isDestroyed() {
-        return destroyed;
-    }
-
-    public void setDestroyed(boolean destroyed) {
-        this.destroyed = destroyed;
+    public Brick() {
+        x = 0;
+        y = 0;
+        type = BRICK;
     }
 
     public void init(float x, float y, int strength) {
@@ -50,18 +48,10 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         sprite = (new Sprite(new Texture(Gdx.files.internal("gfx/bricks/white_brick.png"))));
 
 
-        body = Box2DFactory.createRectangleBody(x, y, 64, 32, this);
-        body.setTransform((x + 32) / PPM, (y + 16) / PPM, 0);
-        sprite.setSize(64 / PPM, 32 / PPM);
-    }
-
-    public Brick() {
-
-        x = 0;
-        y = 0;
-
-        type = BRICK;
-        brickGrid = GameBoard.brickGrid;
+        body = Box2DFactory.createRectangleBody(x, y, BRICK_WIDTH, BRICK_HEIGHT, this);
+        body.setTransform((x + BRICK_WIDTH / 2) / PPM, (y + BRICK_HEIGHT / 2) / PPM, 0);
+        sprite.setSize(BRICK_WIDTH / PPM, BRICK_HEIGHT / PPM);
+        sprite.setPosition(body.getPosition().x - 1, body.getPosition().y - 0.5f);
 
     }
 
@@ -76,22 +66,14 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
     @Override
     public void update(float delta) {
-
         if (strength <= 0) {
             destroyed = true;
-
             type = DEAD_BRICK;
 //            body.setType(BodyDef.BodyType.DynamicBody);
 //            body.applyLinearImpulse(0, -1, body.getWorldCenter().x, body.getWorldCenter().y, true);
 //            body.applyAngularImpulse(1,true);
 
-
         }
-
-        //body.setTransform((x + 32) / PPM, (y + 16) / PPM, 0);
-
-        sprite.setPosition(body.getPosition().x - 1, body.getPosition().y - 0.5f);
-
     }
 
     @Override
@@ -104,6 +86,13 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         //shapeRenderer.rect(x, y, 64, 32);
     }
 
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
 
     public float getX() {
         return x;
@@ -119,24 +108,35 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
     @Override
     public void hit(Collidable collidable) {
-        float angle = -90;
-        if (strength != 0) {
-            strength--;
+        if (collidable instanceof Ball) {
+            float angle = -90;
+
+
+            if (strength != 0) {
+                strength--;
+            }
+
             BrytUtBox.gameState.getScore().increaseMultiplier(1);
             BrytUtBox.gameState.getScore().addScore(100);
 
-            if (collidable instanceof Ball) {
-                angle = ((Ball) collidable).body.getLinearVelocity().angle() - 180;
-            }
+
+            angle = ((Ball) collidable).body.getLinearVelocity().angle() - 180;
+
             GameBoard.effectManager.addEffect(new HitEffect(body.getPosition().x, body.getPosition().y, angle));
             GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x, body.getPosition().y, 100 * BrytUtBox.gameState.getScore().getMultiplier()));
-            sprite.setSize(64 / PPM, 32 / PPM);
-
         }
     }
 
     @Override
     public Types getType() {
         return type;
+    }
+
+    public PowerUpEffect getPowerUpEffect() {
+        return powerUpEffect;
+    }
+
+    public void setPowerUpEffect(PowerUpEffect powerUpEffect) {
+        this.powerUpEffect = powerUpEffect;
     }
 }

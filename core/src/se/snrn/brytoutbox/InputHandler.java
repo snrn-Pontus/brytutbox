@@ -37,7 +37,7 @@ class InputHandler implements InputProcessor{
         }
 
         if(keycode == Input.Keys.M){
-            new SplitBall(GameBoard.ballManager);
+            new SplitBall();
         }
 
 

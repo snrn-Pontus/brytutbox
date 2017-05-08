@@ -39,6 +39,37 @@ public class Box2DFactory {
 
     }
 
+
+    public static Body createPowerUpBody(float x, float y, float width, float height, Object object) {
+        x /= PPM;
+        y /= PPM;
+        width /= PPM;
+        height /= PPM;
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(x, y);
+
+        Body body = GameBoard.world.createBody(bodyDef);
+
+        PolygonShape rectangle = new PolygonShape();
+        rectangle.setAsBox(width / 2, height / 2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangle;
+        fixtureDef.density = 0.5f;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 1f;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(object);
+
+        fixture.setSensor(true);
+
+        rectangle.dispose();
+        return body;
+    }
+
     public static Body createRectangleBody(float x, float y, float width, float height, Object object) {
         x /= PPM;
         y /= PPM;

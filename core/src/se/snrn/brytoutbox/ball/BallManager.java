@@ -27,7 +27,7 @@ public class BallManager implements Updateable, Renderable {
     }
 
     public void spawnNewBall(){
-        Ball ball = new Ball(NORMAL);
+        Ball ball = new Ball(NORMAL,100,100);
         addBall(ball);
 
     }

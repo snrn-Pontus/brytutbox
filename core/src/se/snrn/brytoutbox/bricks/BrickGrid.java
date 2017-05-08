@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
 
+import static se.snrn.brytoutbox.BrytUtBox.PPM;
+
 public class BrickGrid implements Updateable, Renderable, Debuggable {
 
     private Brick[][] bricks;
@@ -43,7 +45,7 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
                     bricks[x][y].update(delta);
                     bricksLeft++;
                     if (bricks[x][y].isDestroyed()) {
-
+                        GameBoard.powerUpManager.addRandomPowerUp(bricks[x][y].body.getPosition().x*PPM, bricks[x][y].body.getPosition().y*PPM);
                         GameBoard.world.destroyBody(bricks[x][y].body);
                         bricks[x][y] = null;
                     }
