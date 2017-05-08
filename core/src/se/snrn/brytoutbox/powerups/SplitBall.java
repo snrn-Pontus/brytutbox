@@ -16,18 +16,18 @@ public class SplitBall implements PowerUp {
 
 
         Ball smallBall = new Ball(SMALL);
-        smallBall.body.getPosition().set(ballManager.getBall().getX(), ballManager.getBall().getY());
+        smallBall.body.getPosition().set(ballManager.getBall().body.getTransform().getPosition());
         smallBall.body.setLinearVelocity(5,5);
         Ball smallBall2 = new Ball(SMALL);
-        smallBall2.body.getPosition().set(ballManager.getBall().getX(), ballManager.getBall().getY());
-        smallBall2.body.setLinearVelocity(5,5);
-
-
-        ballManager.getBall().setLost(true);
-        ballManager.removeBall(ballManager.getBall());
+        smallBall2.body.getPosition().set(ballManager.getBall().body.getTransform().getPosition());
+        smallBall2.body.setLinearVelocity(-5,5);
 
         ballManager.addBall(smallBall);
         ballManager.addBall(smallBall2);
+
+        ballManager.getBall().setLost(true);
+
+
 
     }
 

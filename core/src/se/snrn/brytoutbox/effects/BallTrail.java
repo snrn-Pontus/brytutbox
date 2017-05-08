@@ -8,6 +8,9 @@ import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 import se.snrn.brytoutbox.ball.Ball;
 
+import static se.snrn.brytoutbox.ball.BallType.NORMAL;
+import static se.snrn.brytoutbox.ball.BallType.SMALL;
+
 public class BallTrail implements Updateable, Renderable {
     private ParticleEffect p;
     private Ball ball;
@@ -16,7 +19,12 @@ public class BallTrail implements Updateable, Renderable {
         this.ball = ball;
         p = new ParticleEffect();
         p.load(Gdx.files.internal("effects/trail.particle"), Gdx.files.internal("gfx"));
-        p.scaleEffect(0.03125f);
+        if(ball.getBallType() == NORMAL) {
+            p.scaleEffect(0.03125f);
+        }
+        if(ball.getBallType() == SMALL) {
+            p.scaleEffect(0.015625f);
+        }
 
     }
 

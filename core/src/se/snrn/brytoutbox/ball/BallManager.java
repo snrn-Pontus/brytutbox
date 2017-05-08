@@ -2,10 +2,7 @@ package se.snrn.brytoutbox.ball;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import se.snrn.brytoutbox.BrytUtBox;
-import se.snrn.brytoutbox.Renderable;
-import se.snrn.brytoutbox.States;
-import se.snrn.brytoutbox.Updateable;
+import se.snrn.brytoutbox.*;
 
 import java.util.ArrayList;
 
@@ -46,6 +43,7 @@ public class BallManager implements Updateable, Renderable {
             ball.update(delta);
             if (ball.isLost()) {
                 ballsToRemove.add(ball);
+                GameBoard.world.destroyBody(ball.body);
             }
         }
         if (balls.isEmpty()) {
@@ -69,7 +67,4 @@ public class BallManager implements Updateable, Renderable {
         return balls.get(0);
     }
 
-    public void removeBall(Ball ball) {
-        ballsToRemove.add(ball);
-    }
 }

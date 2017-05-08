@@ -49,8 +49,12 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
 
         if(ballType == BallType.SMALL) {
             ballSize = 16;
+            stuck = false;
         } else {
             ballSize = 32;
+            stuck = true;
+            paddle.setStuckBall(this);
+
         }
 
         type = BALL;
@@ -62,7 +66,6 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         sprite.setSize(ballSize / PPM, ballSize / PPM);
         sprite.setOriginCenter();
 
-        paddle.setStuckBall(this);
     }
 
 
@@ -154,4 +157,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         return maxSpeed;
     }
 
+    public BallType getBallType() {
+        return ballType;
+    }
 }
