@@ -15,7 +15,7 @@ import se.snrn.brytoutbox.physics.Types;
 public class PowerUp implements Updateable, Renderable, Collidable {
 
     private PowerUpEffect effect;
-    private Body body;
+    public Body body;
 
     private float x;
     private float y;
@@ -23,6 +23,16 @@ public class PowerUp implements Updateable, Renderable, Collidable {
     private Sprite sprite;
     private Sprite background;
     private boolean queuedToStart;
+
+    public boolean isLost() {
+        return lost;
+    }
+
+    public void setLost(boolean lost) {
+        this.lost = lost;
+    }
+
+    private boolean lost;
 
     public PowerUp(PowerUpEffect effect, float x, float y) {
         this.effect = effect;
@@ -40,10 +50,13 @@ public class PowerUp implements Updateable, Renderable, Collidable {
 
     @Override
     public void update(float delta) {
-        y--;
         background.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
         sprite.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
 
+
+        if(body.getPosition().y < -1){
+            lost = true;
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package se.snrn.brytoutbox.powerups;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.brytoutbox.GameBoard;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 
@@ -29,6 +30,14 @@ public class PowerUpManager implements Updateable, Renderable {
             if(powerUp.isQueuedToStart()){
                 powerUp.getEffect().start();
                 powerUp.setQueuedToStart(false);
+                powerUpsToRemove.add(powerUp);
+                GameBoard.world.destroyBody(powerUp.body);
+            }
+
+            if(powerUp.isLost()){
+                powerUpsToRemove.add(powerUp);
+                GameBoard.world.destroyBody(powerUp.body);
+                System.out.println("lost");
             }
             powerUp.update(delta);
         }
