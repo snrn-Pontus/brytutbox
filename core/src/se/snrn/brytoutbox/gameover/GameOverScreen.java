@@ -60,6 +60,8 @@ public class GameOverScreen implements Screen {
         uiCamera.update();
         Gdx.input.setInputProcessor(inputHandler);
 
+        gameOverUi.setInputFocus();
+
 
     }
 

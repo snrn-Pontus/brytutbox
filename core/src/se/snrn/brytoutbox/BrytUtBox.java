@@ -25,7 +25,9 @@ public class BrytUtBox extends Game {
         batch = new SpriteBatch();
         uiBatch = new SpriteBatch();
         levelSelection = new LevelSelection(batch, uiBatch, this);
-        setScreen(levelSelection);
+        //setScreen(levelSelection);
+        setScreen(new GameOverScreen(batch,uiBatch,this,1));
+
     }
 
     public void selectLevel(int levelNumber) {
