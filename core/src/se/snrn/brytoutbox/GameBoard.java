@@ -43,7 +43,7 @@ public class GameBoard implements Screen {
 
     public static EffectManager effectManager;
     private Batch uiBatch;
-    private BallManager ballManager;
+    public static BallManager ballManager;
     private Ui ui;
     private MapReader mapReader;
     private BrickPool brickPool;

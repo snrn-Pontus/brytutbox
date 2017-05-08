@@ -9,7 +9,8 @@ import se.snrn.brytoutbox.Updateable;
 
 import java.util.ArrayList;
 
-import static se.snrn.brytoutbox.GameBoard.paddle;
+import static se.snrn.brytoutbox.ball.BallType.NORMAL;
+import static se.snrn.brytoutbox.ball.BallType.SMALL;
 
 public class BallManager implements Updateable, Renderable {
 
@@ -29,21 +30,14 @@ public class BallManager implements Updateable, Renderable {
     }
 
     public void spawnNewBall(){
-        Ball ball = new Ball();
+        Ball ball = new Ball(NORMAL);
         addBall(ball);
 
     }
 
     @Override
     public void update(float delta) {
-        if (balls.isEmpty()) {
-            if (BrytUtBox.gameState.getBallsLeft() > 0) {
-                spawnNewBall();
-                BrytUtBox.gameState.decreaseBallsLeft();
-            } else {
-                BrytUtBox.gameState.setState(States.GAME_OVER);
-            }
-        }
+
         balls.addAll(ballsToAdd);
         ballsToAdd.clear();
         balls.removeAll(ballsToRemove);
@@ -54,6 +48,14 @@ public class BallManager implements Updateable, Renderable {
                 ballsToRemove.add(ball);
             }
         }
+        if (balls.isEmpty()) {
+            if (BrytUtBox.gameState.getBallsLeft() > 0) {
+                spawnNewBall();
+                BrytUtBox.gameState.decreaseBallsLeft();
+            } else {
+                BrytUtBox.gameState.setState(States.GAME_OVER);
+            }
+        }
     }
 
     @Override
@@ -61,5 +63,13 @@ public class BallManager implements Updateable, Renderable {
         for (Ball ball : balls) {
             ball.render(batch);
         }
+    }
+
+    public Ball getBall() {
+        return balls.get(0);
+    }
+
+    public void removeBall(Ball ball) {
+        ballsToRemove.add(ball);
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.paddle.Paddle;
+import se.snrn.brytoutbox.powerups.SplitBall;
 
 class InputHandler implements InputProcessor{
 
@@ -34,6 +35,11 @@ class InputHandler implements InputProcessor{
         if(keycode == Input.Keys.SPACE){
             paddle.release();
         }
+
+        if(keycode == Input.Keys.M){
+            new SplitBall(GameBoard.ballManager);
+        }
+
 
 
 

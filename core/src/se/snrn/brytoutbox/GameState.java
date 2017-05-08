@@ -6,6 +6,7 @@ public class GameState {
     private Score score;
     private States state;
     private int bricksLeft;
+    private int level;
 
     public GameState() {
         score = new Score();
@@ -38,5 +39,13 @@ public class GameState {
 
     public States getState() {
         return state;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

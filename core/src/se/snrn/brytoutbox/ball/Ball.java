@@ -29,15 +29,17 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     private boolean lost;
     private boolean stuck;
 
-    private static int BALL_SIZE = 32;
+    private int ballSize;
     private Types type;
     private float minSpeed = 10;
     private float maxSpeed = 10;
     private BallTrail ballTrail;
     private Vector2 vel;
+    private BallType ballType;
 
 
-    public Ball() {
+    public Ball(BallType ballType) {
+        this.ballType = ballType;
         sprite = new Sprite(new Texture(Gdx.files.internal("gfx/ball.png")));
         x = 50;
         y = 100;
@@ -45,13 +47,19 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         paddle = GameBoard.paddle;
         stuck = true;
 
+        if(ballType == BallType.SMALL) {
+            ballSize = 16;
+        } else {
+            ballSize = 32;
+        }
+
         type = BALL;
 
         ballTrail = new BallTrail(this);
 
-        body = Box2DFactory.createCircleBody(x, y, 16, this);
 
-        sprite.setSize(BALL_SIZE / PPM, BALL_SIZE / PPM);
+        body = Box2DFactory.createCircleBody(x, y, ballSize/2, this);
+        sprite.setSize(ballSize / PPM, ballSize / PPM);
         sprite.setOriginCenter();
 
         paddle.setStuckBall(this);
@@ -95,7 +103,7 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
         }
 
         if (stuck) {
-            body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y + BALL_SIZE / PPM, 0);
+            body.setTransform(paddle.body.getPosition().x, paddle.body.getPosition().y + ballSize / PPM, 0);
         }
         sprite.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
         sprite.setRotation(body.getTransform().getRotation());
@@ -145,4 +153,5 @@ public class Ball implements Updateable, Renderable, Debuggable, Collidable {
     public float getMaxSpeed() {
         return maxSpeed;
     }
+
 }

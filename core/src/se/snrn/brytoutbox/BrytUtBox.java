@@ -3,6 +3,7 @@ package se.snrn.brytoutbox;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import se.snrn.brytoutbox.gameover.GameOverScreen;
 import se.snrn.brytoutbox.levelselection.LevelSelection;
 
 public class BrytUtBox extends Game {
@@ -32,14 +33,15 @@ public class BrytUtBox extends Game {
         setScreen(gameBoard);
     }
 
+    public void gameOver(int levelNumber){
+            setScreen(new GameOverScreen(batch,uiBatch,this, levelNumber));
+    }
+
     @Override
     public void render() {
         super.render();
-        if(gameState.getState() == States.MAP_COMPLETED){
-            System.out.println("you won");
-        }
-        if(gameState.getState() == States.GAME_OVER){
-            System.out.println("Game over");
+        if(gameState.getState() == States.GAME_OVER && !(getScreen() instanceof GameOverScreen)){
+            gameOver(gameState.getLevel());
         }
     }
 
