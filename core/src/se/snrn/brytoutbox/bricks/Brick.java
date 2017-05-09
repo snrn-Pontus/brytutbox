@@ -69,10 +69,6 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         if (strength <= 0) {
             destroyed = true;
             type = DEAD_BRICK;
-//            body.setType(BodyDef.BodyType.DynamicBody);
-//            body.applyLinearImpulse(0, -1, body.getWorldCenter().x, body.getWorldCenter().y, true);
-//            body.applyAngularImpulse(1,true);
-
         }
     }
 

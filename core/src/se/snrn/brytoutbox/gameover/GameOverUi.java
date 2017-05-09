@@ -18,6 +18,7 @@ import se.snrn.brytoutbox.Updateable;
 import se.snrn.brytoutbox.levelselection.LevelSelection;
 
 import static se.snrn.brytoutbox.BrytUtBox.WIDTH;
+import static se.snrn.brytoutbox.BrytUtBox.gameState;
 
 public class GameOverUi implements Updateable, Renderable{
     private BitmapFont bitmapFont;
@@ -67,6 +68,7 @@ public class GameOverUi implements Updateable, Renderable{
 
         uiBackground.draw(batch,0,0, Gdx.graphics.getWidth(), 320);
         bitmapFont.draw(batch, "Level: "+gameOverScreen.getLevel(), 32,32);
+        bitmapFont.draw(batch, "Score: "+gameState.getScore().getScore(), 128,32);
         textField.draw(batch, 1);
     }
 }

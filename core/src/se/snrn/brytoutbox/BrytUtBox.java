@@ -16,23 +16,26 @@ public class BrytUtBox extends Game {
 
     public static int WIDTH;
     public static int HEIGHT;
+    public static Settings settings;
 
     @Override
     public void create() {
+        settings = new Settings();
         gameState = new GameState();
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
         batch = new SpriteBatch();
         uiBatch = new SpriteBatch();
         levelSelection = new LevelSelection(batch, uiBatch, this);
-        //setScreen(levelSelection);
-        setScreen(new GameOverScreen(batch,uiBatch,this,1));
+        setScreen(levelSelection);
+        //setScreen(new GameOverScreen(batch,uiBatch,this,1));
 
     }
 
     public void selectLevel(int levelNumber) {
         gameBoard = new GameBoard(batch, uiBatch, levelNumber);
         setScreen(gameBoard);
+        gameState.setState(States.PLAYING);
     }
 
     public void gameOver(int levelNumber){
@@ -42,7 +45,8 @@ public class BrytUtBox extends Game {
     @Override
     public void render() {
         super.render();
-        if(gameState.getState() == States.GAME_OVER && !(getScreen() instanceof GameOverScreen)){
+        gameState.update(Gdx.graphics.getDeltaTime());
+        if(gameState.getState() == States.GAME_OVER && (getScreen() instanceof GameBoard)){
             gameOver(gameState.getLevel());
         }
     }

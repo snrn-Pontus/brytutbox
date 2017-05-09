@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.gameState;
 
 public class BrickGrid implements Updateable, Renderable, Debuggable {
 
@@ -19,6 +20,7 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
     public BrickGrid(int[][] map, BrickPool brickPool) {
         this.brickPool = brickPool;
 
+        bricksLeft = 0;
 
         bricks = new Brick[map.length][map[0].length];
 
@@ -28,9 +30,12 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
                 if (map[x][y] != 0) {
                     bricks[x][y] = brickPool.obtain();
                     bricks[x][y].init((x * 64), y * 32, map[x][y]);
+                    bricksLeft++;
                 }
             }
         }
+        BrytUtBox.gameState.setBricksLeft(bricksLeft);
+        gameState.setStarted(true);
     }
 
     @Override
@@ -45,7 +50,9 @@ public class BrickGrid implements Updateable, Renderable, Debuggable {
                     bricks[x][y].update(delta);
                     bricksLeft++;
                     if (bricks[x][y].isDestroyed()) {
-                        GameBoard.powerUpManager.addRandomPowerUp(bricks[x][y].body.getPosition().x*PPM, bricks[x][y].body.getPosition().y*PPM);
+                        if(Math.random()*100 < Settings.chanceToDropPowerUp) {
+                            GameBoard.powerUpManager.addRandomPowerUp(bricks[x][y].body.getPosition().x * PPM, bricks[x][y].body.getPosition().y * PPM);
+                        }
                         GameBoard.world.destroyBody(bricks[x][y].body);
                         bricks[x][y] = null;
                     }
