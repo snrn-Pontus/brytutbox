@@ -2,7 +2,6 @@ package se.snrn.brytoutbox.gameover;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -10,14 +9,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
-import se.snrn.brytoutbox.levelselection.LevelSelection;
+import sun.font.GraphicComponent;
 
-import static se.snrn.brytoutbox.BrytUtBox.WIDTH;
 import static se.snrn.brytoutbox.BrytUtBox.gameState;
 
 public class GameOverUi implements Updateable, Renderable{
@@ -27,16 +28,23 @@ public class GameOverUi implements Updateable, Renderable{
     private TextField textField;
     Stage stage;
 
+    Drawable cursor;
+    Drawable selection;
+    private Label label;
 
 
     public GameOverUi(GameOverScreen gameOverScreen) {
         this.gameOverScreen = gameOverScreen;
 
         uiBackground = new NinePatch(new Texture(Gdx.files.internal("gfx/ui/selection.png")), 4, 4, 4, 4);
+        cursor = new SpriteDrawable(new Sprite(new Texture("gfx/ui/cursor.png")));
+
+        selection = new SpriteDrawable(new Sprite(new Texture("gfx/ui/white.png")));
         bitmapFont = new BitmapFont();
         NinePatchDrawable drawable = new NinePatchDrawable();
         drawable.setPatch(uiBackground);
-        textField = new TextField("Text", new TextField.TextFieldStyle(new BitmapFont(), Color.BLACK, drawable,drawable,drawable));
+        textField = new TextField("", new TextField.TextFieldStyle(new BitmapFont(), Color.BLACK, cursor,selection,drawable));
+
 
         textField.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
@@ -50,7 +58,10 @@ public class GameOverUi implements Updateable, Renderable{
         stage = new Stage();
         stage.addActor(textField);
 
-
+        label = new Label("Enter name:",new Label.LabelStyle(new BitmapFont(),Color.BLACK));
+        stage.addActor(label);
+        label.setPosition(128,160);
+        textField.setPosition(128,128);
 
     }
 
@@ -70,5 +81,6 @@ public class GameOverUi implements Updateable, Renderable{
         bitmapFont.draw(batch, "Level: "+gameOverScreen.getLevel(), 32,32);
         bitmapFont.draw(batch, "Score: "+gameState.getScore().getScore(), 128,32);
         textField.draw(batch, 1);
+        label.draw(batch,1);
     }
 }
