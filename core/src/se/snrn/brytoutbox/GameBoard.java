@@ -9,23 +9,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.bricks.BrickGrid;
 import se.snrn.brytoutbox.bricks.BrickPool;
 import se.snrn.brytoutbox.effects.EffectManager;
-import se.snrn.brytoutbox.maps.MapReader;
+import se.snrn.brytoutbox.maps.Map;
 import se.snrn.brytoutbox.paddle.Paddle;
-import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.CollisionHandler;
 import se.snrn.brytoutbox.physics.Wall;
 import se.snrn.brytoutbox.powerups.PowerUpManager;
 import se.snrn.brytoutbox.ui.Ui;
 
-
-import static se.snrn.brytoutbox.BrytUtBox.HEIGHT;
-import static se.snrn.brytoutbox.BrytUtBox.PPM;
-import static se.snrn.brytoutbox.BrytUtBox.WIDTH;
+import static se.snrn.brytoutbox.BrytUtBox.*;
 
 
 public class GameBoard implements Screen {
@@ -47,13 +42,12 @@ public class GameBoard implements Screen {
     public static EffectManager effectManager;
     public static PowerUpManager powerUpManager;
     private Ui ui;
-    private MapReader mapReader;
     private BrickPool brickPool;
     private Vector2 gravity;
     Box2DDebugRenderer box2DDebugRenderer;
 
 
-    public GameBoard(Batch batch, SpriteBatch uiBatch, int levelNumber) {
+    public GameBoard(Batch batch, SpriteBatch uiBatch, Map map) {
 
         box2DDebugRenderer = new Box2DDebugRenderer();
 
@@ -93,8 +87,7 @@ public class GameBoard implements Screen {
 
         collisionHandler = new CollisionHandler(world);
 
-        mapReader = new MapReader();
-        brickGrid = new BrickGrid(mapReader.readMapImage(levelNumber), brickPool);
+        brickGrid = new BrickGrid(map, brickPool);
 
 
         inputHandler = new InputHandler(paddle, orthographicCamera);

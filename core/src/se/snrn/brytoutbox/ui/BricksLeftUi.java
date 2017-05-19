@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import se.snrn.brytoutbox.GameState;
 import se.snrn.brytoutbox.Renderable;
-import se.snrn.brytoutbox.Score;
 import se.snrn.brytoutbox.Updateable;
 
 public class BricksLeftUi implements Updateable, Renderable{

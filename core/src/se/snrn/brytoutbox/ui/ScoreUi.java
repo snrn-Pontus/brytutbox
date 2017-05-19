@@ -3,18 +3,18 @@ package se.snrn.brytoutbox.ui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import se.snrn.brytoutbox.Renderable;
-import se.snrn.brytoutbox.Score;
+import se.snrn.brytoutbox.ScoreState;
 import se.snrn.brytoutbox.Updateable;
 
 public class ScoreUi implements Updateable, Renderable{
 
-    private Score score;
+    private ScoreState scoreState;
     private int x;
     private int y;
     private BitmapFont bitmapFont;
 
-    public ScoreUi(Score score, int x, int y) {
-        this.score = score;
+    public ScoreUi(ScoreState scoreState, int x, int y) {
+        this.scoreState = scoreState;
         this.x = x;
         this.y = y;
         bitmapFont = new BitmapFont();
@@ -27,6 +27,6 @@ public class ScoreUi implements Updateable, Renderable{
 
     @Override
     public void render(Batch batch) {
-            bitmapFont.draw(batch, score.getScore()+"",x,y);
+            bitmapFont.draw(batch, scoreState.getScore()+"",x,y);
     }
 }

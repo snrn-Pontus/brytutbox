@@ -5,22 +5,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Pool;
 import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.maps.Map;
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
 import static se.snrn.brytoutbox.BrytUtBox.gameState;
 
 public class BrickGrid implements Updateable, Renderable, Debuggable {
 
+    private final int[][] map;
     private Brick[][] bricks;
     private int bottom;
     private Pool<Brick> brickPool;
     private int bricksLeft;
 
 
-    public BrickGrid(int[][] map, BrickPool brickPool) {
+    public BrickGrid(Map mapIn, BrickPool brickPool) {
         this.brickPool = brickPool;
 
         bricksLeft = 0;
+        this.map = mapIn.getIntArray();
 
         bricks = new Brick[map.length][map[0].length];
 

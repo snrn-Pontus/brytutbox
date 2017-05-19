@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import se.snrn.brytoutbox.BrytUtBox;
-import se.snrn.brytoutbox.maps.MapReader;
+import se.snrn.brytoutbox.maps.Map;
+
+import java.util.ArrayList;
 
 import static se.snrn.brytoutbox.BrytUtBox.*;
 
@@ -15,6 +17,7 @@ import static se.snrn.brytoutbox.BrytUtBox.*;
 public class LevelSelection implements Screen {
 
 
+    private ArrayList<Map> maps;
     private BrickGridPreview brickGridPreview;
 
     private OrthographicCamera orthographicCamera;
@@ -25,7 +28,6 @@ public class LevelSelection implements Screen {
     private BrytUtBox brytUtBox;
 
 
-    private MapReader mapReader;
     private SelectionUi selectionUi;
     private LevelSelectInputHandler inputHandler;
     private int mapNumber;
@@ -33,7 +35,7 @@ public class LevelSelection implements Screen {
 
     public LevelSelection(Batch batch, SpriteBatch uiBatch, BrytUtBox brytUtBox) {
 
-        mapNumber = 1;
+        mapNumber = 0;
 
         this.batch = batch;
         this.uiBatch = uiBatch;
@@ -44,9 +46,6 @@ public class LevelSelection implements Screen {
         orthographicCamera = new OrthographicCamera(WIDTH / PPM, HEIGHT / PPM);
         uiCamera = new OrthographicCamera(WIDTH, HEIGHT);
 
-
-        mapReader = new MapReader();
-        brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
 
         inputHandler = new LevelSelectInputHandler(this);
 
@@ -61,6 +60,7 @@ public class LevelSelection implements Screen {
         uiCamera.update();
         Gdx.input.setInputProcessor(inputHandler);
 
+        maps = BrytUtBox.getMaps();
 
     }
 
@@ -72,17 +72,21 @@ public class LevelSelection implements Screen {
 
         orthographicCamera.update();
         uiCamera.update();
-        brickGridPreview.update(delta);
-
+        if (brickGridPreview != null) {
+            brickGridPreview.update(delta);
+        }
         batch.setProjectionMatrix(orthographicCamera.combined);
         batch.begin();
-        brickGridPreview.render(batch);
+        if (brickGridPreview != null) {
+            brickGridPreview.render(batch);
+        }
         batch.end();
 
 
         uiBatch.setProjectionMatrix(uiCamera.combined);
         uiBatch.begin();
         selectionUi.render(uiBatch);
+
         uiBatch.end();
 
 
@@ -115,27 +119,31 @@ public class LevelSelection implements Screen {
 
     public void selectLevel() {
         gameState.setLevel(mapNumber);
-        brytUtBox.selectLevel(mapNumber);
+        brytUtBox.selectLevel(maps.get(mapNumber));
     }
 
 
     public void nextLevel() {
         int nextMap = mapNumber + 1;
-        if (Gdx.files.internal("maps/map_" + nextMap + ".png").exists()) {
+        if (maps.get(nextMap) != null) {
             mapNumber++;
-            brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
+            brickGridPreview = new BrickGridPreview(maps.get(mapNumber).getIntArray());
         }
     }
 
     public void previousLevel() {
         int prevMap = mapNumber - 1;
-        if (Gdx.files.internal("maps/map_" + prevMap + ".png").exists()) {
+        if (maps.get(prevMap) != null) {
             mapNumber--;
-            brickGridPreview = new BrickGridPreview(mapReader.readMapImage(mapNumber));
+            brickGridPreview = new BrickGridPreview(maps.get(mapNumber).getIntArray());
         }
     }
 
     public int getMapNumber() {
         return mapNumber;
+    }
+
+    public String getMapName() {
+        return maps.get(mapNumber).getMapName();
     }
 }

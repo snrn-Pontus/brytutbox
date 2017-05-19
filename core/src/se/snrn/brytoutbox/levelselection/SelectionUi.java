@@ -41,7 +41,7 @@ public class SelectionUi implements Updateable, Renderable{
     @Override
     public void render(Batch batch) {
         uiBackground.draw(batch,0,0, Gdx.graphics.getWidth(), 320);
-        bitmapFont.draw(batch, "Level: "+levelSelection.getMapNumber(), 32,32);
+        bitmapFont.draw(batch, "Level: "+levelSelection.getMapNumber()+ " Name: "+levelSelection.getMapName(), 32,32);
         leftArrow.draw(batch);
         rightArrow.draw(batch);
 

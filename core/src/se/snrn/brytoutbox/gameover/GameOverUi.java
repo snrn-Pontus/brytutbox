@@ -14,10 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
-import sun.font.GraphicComponent;
 
 import static se.snrn.brytoutbox.BrytUtBox.gameState;
 
@@ -79,7 +77,7 @@ public class GameOverUi implements Updateable, Renderable{
 
         uiBackground.draw(batch,0,0, Gdx.graphics.getWidth(), 320);
         bitmapFont.draw(batch, "Level: "+gameOverScreen.getLevel(), 32,32);
-        bitmapFont.draw(batch, "Score: "+gameState.getScore().getScore(), 128,32);
+        bitmapFont.draw(batch, "ScoreState: "+gameState.getScoreState().getScore(), 128,32);
         textField.draw(batch, 1);
         label.draw(batch,1);
     }

@@ -12,8 +12,6 @@ import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
-import se.snrn.brytoutbox.physics.Wall;
-import se.snrn.brytoutbox.powerups.PowerUp;
 
 
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
@@ -99,7 +97,7 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
             ball = (Ball) collidable;
 
             float maxSpeed = ball.getMaxSpeed();
-            BrytUtBox.gameState.getScore().resetMultiplier();
+            BrytUtBox.gameState.getScoreState().resetMultiplier();
             if (this.isMovingLeft()) {
                 ball.body.setLinearVelocity(-maxSpeed / 2, maxSpeed / 2);
             } else if (this.isMovingRight()) {

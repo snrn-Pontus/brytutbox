@@ -1,12 +1,12 @@
 package se.snrn.brytoutbox;
 
 
-public class Score {
+public class ScoreState {
 
     private int score;
     private int multiplier;
 
-    public Score() {
+    public ScoreState() {
         score = 0;
         multiplier = 0;
     }

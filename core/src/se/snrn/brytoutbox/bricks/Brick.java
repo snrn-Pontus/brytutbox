@@ -112,14 +112,14 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
                 strength--;
             }
 
-            BrytUtBox.gameState.getScore().increaseMultiplier(1);
-            BrytUtBox.gameState.getScore().addScore(100);
+            BrytUtBox.gameState.getScoreState().increaseMultiplier(1);
+            BrytUtBox.gameState.getScoreState().addScore(100);
 
 
             angle = ((Ball) collidable).body.getLinearVelocity().angle() - 180;
 
             GameBoard.effectManager.addEffect(new HitEffect(body.getPosition().x, body.getPosition().y, angle));
-            GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x, body.getPosition().y, 100 * BrytUtBox.gameState.getScore().getMultiplier()));
+            GameBoard.effectManager.addEffect(new ScoreFloater(body.getPosition().x, body.getPosition().y, 100 * BrytUtBox.gameState.getScoreState().getMultiplier()));
         }
     }
 

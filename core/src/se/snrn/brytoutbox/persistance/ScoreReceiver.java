@@ -4,19 +4,19 @@
 //import com.badlogic.gdx.Net;
 //import com.badlogic.gdx.net.HttpParametersUtils;
 //import com.badlogic.gdx.utils.Json;
-//import se.snrn.brytoutbox.Score;
+//import se.snrn.brytoutbox.ScoreState;
 //
 //import java.util.HashMap;
 //import java.util.Map;
 //
 //public class ScoreReceiver {
-//    public Score result;
+//    public ScoreState result;
 //
 //    public ScoreReceiver() {
 //
 //    }
 //
-//    public Score getScore() {
+//    public ScoreState getScoreState() {
 //        Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
 //        httpGet.setHeader("Accept", "application/json");
 //
@@ -33,7 +33,7 @@
 //                String status = httpResponse.getResultAsString();
 //                System.out.println(status);
 //                Json json = new Json();
-//                Score score = json.fromJson(Score.class, status);
+//                ScoreState score = json.fromJson(ScoreState.class, status);
 //                System.out.println(score);
 //            }
 //

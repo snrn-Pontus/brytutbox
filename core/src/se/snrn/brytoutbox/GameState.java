@@ -3,24 +3,25 @@ package se.snrn.brytoutbox;
 public class GameState implements Updateable {
 
     private int ballsLeft;
-    private Score score;
+    private ScoreState scoreState;
     private States state;
     private int bricksLeft;
     private int level;
     private boolean started;
 
     public GameState() {
-        score = new Score();
+        scoreState = new ScoreState();
         ballsLeft = Settings.lives;
         setStarted(false);
+        state = States.LOADING;
     }
 
     public int getBallsLeft() {
         return ballsLeft;
     }
 
-    public Score getScore() {
-        return score;
+    public ScoreState getScoreState() {
+        return scoreState;
     }
 
     public void decreaseBallsLeft() {

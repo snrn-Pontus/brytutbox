@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.brytoutbox.GameState;
-import se.snrn.brytoutbox.ball.BallManager;
 import se.snrn.brytoutbox.Renderable;
-import se.snrn.brytoutbox.Score;
+import se.snrn.brytoutbox.ScoreState;
 import se.snrn.brytoutbox.Updateable;
 
 public class Ui implements Updateable, Renderable{
-    private Score score;
+    private ScoreState scoreState;
     private ScoreUi scoreUi;
     private Sprite uiBackground;
     private BallUi ballUi;
@@ -22,9 +21,9 @@ public class Ui implements Updateable, Renderable{
         uiBackground = new Sprite(new Texture(Gdx.files.internal("gfx/ui/background.png")));
         uiBackground.setSize(Gdx.graphics.getWidth(), 32);
         uiBackground.setPosition(0, Gdx.graphics.getHeight()-32);
-        this.score = gameState.getScore();
+        this.scoreState = gameState.getScoreState();
 
-        scoreUi = new ScoreUi(score, 16, Gdx.graphics.getHeight()-16);
+        scoreUi = new ScoreUi(scoreState, 16, Gdx.graphics.getHeight()-16);
         ballUi = new BallUi(gameState,64, Gdx.graphics.getHeight()-32 );
         bricksLeftUi = new BricksLeftUi(gameState, 128, Gdx.graphics.getHeight()-16);
     }

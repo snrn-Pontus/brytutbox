@@ -4,7 +4,7 @@
 //import com.badlogic.gdx.Net;
 //import com.badlogic.gdx.utils.Json;
 //import com.badlogic.gdx.utils.JsonWriter;
-//import se.snrn.brytoutbox.Score;
+//import se.snrn.brytoutbox.ScoreState;
 //
 //public class ScoreSender {
 //
@@ -12,7 +12,7 @@
 //
 //    }
 //
-//    public void sendScore(Score score) {
+//    public void sendScore(ScoreState score) {
 //
 //
 //        Json json = new Json();
