@@ -4,7 +4,9 @@ package se.snrn.brytoutbox.physics;
 import com.badlogic.gdx.physics.box2d.*;
 import se.snrn.brytoutbox.GameBoard;
 
+import static se.snrn.brytoutbox.BrytUtBox.HEIGHT;
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.WIDTH;
 
 public class Box2DFactory {
 
@@ -68,6 +70,13 @@ public class Box2DFactory {
 
         rectangle.dispose();
         return body;
+    }
+
+    public static void createWalls() {
+        Wall topWall = new Wall(WIDTH / 2, HEIGHT - 24, WIDTH, 16);
+
+        Wall leftWall = new Wall(-4, HEIGHT / 2, 8, HEIGHT);
+        Wall rightWall = new Wall(WIDTH - 16, HEIGHT / 2, 8, HEIGHT);
     }
 
     public static Body createRectangleBody(float x, float y, float width, float height, Object object) {

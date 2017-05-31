@@ -5,26 +5,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Pool;
-import se.snrn.brytoutbox.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import se.snrn.brytoutbox.BrytUtBox;
+import se.snrn.brytoutbox.GameBoard;
+import se.snrn.brytoutbox.Renderable;
+import se.snrn.brytoutbox.Updateable;
 import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.effects.HitEffect;
 import se.snrn.brytoutbox.effects.ScoreFloater;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
-import se.snrn.brytoutbox.powerups.PowerUpEffect;
 
-import static se.snrn.brytoutbox.BrytUtBox.PPM;
+import static se.snrn.brytoutbox.BrytUtBox.*;
 import static se.snrn.brytoutbox.physics.Types.BRICK;
 import static se.snrn.brytoutbox.physics.Types.DEAD_BRICK;
 
-public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable, Collidable {
+public class Brick implements Updateable, Renderable, Collidable {
 
-    public static int BRICK_WIDTH = 64;
-    public static int BRICK_HEIGHT = 32;
+
     private Sprite sprite;
     private float x;
     private float y;
@@ -33,15 +32,9 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     Body body;
     private Types type;
     private boolean destroyed;
-    private PowerUpEffect powerUpEffect;
 
-    public Brick() {
-        x = 0;
-        y = 0;
+    public Brick(int x, int y, int strength) {
         type = BRICK;
-    }
-
-    public void init(float x, float y, int strength) {
         this.strength = strength;
         this.x = x;
         this.y = y;
@@ -52,17 +45,8 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         body.setTransform((x + BRICK_WIDTH / 2) / PPM, (y + BRICK_HEIGHT / 2) / PPM, 0);
         sprite.setSize(BRICK_WIDTH / PPM, BRICK_HEIGHT / PPM);
         sprite.setPosition(body.getPosition().x - 1, body.getPosition().y - 0.5f);
-
     }
 
-    @Override
-    public void reset() {
-        x = 0;
-        y = 0;
-        strength = 0;
-        sprite = null;
-
-    }
 
     @Override
     public void update(float delta) {
@@ -77,18 +61,11 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         sprite.draw(batch, strength * 0.20f);
     }
 
-    @Override
-    public void drawDebug(ShapeRenderer shapeRenderer) {
-        //shapeRenderer.rect(x, y, 64, 32);
-    }
 
     public boolean isDestroyed() {
         return destroyed;
     }
 
-    public void setDestroyed(boolean destroyed) {
-        this.destroyed = destroyed;
-    }
 
     public float getX() {
         return x;
@@ -98,15 +75,11 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
         return y;
     }
 
-    public int getStrength() {
-        return strength;
-    }
 
     @Override
     public void hit(Collidable collidable) {
         if (collidable instanceof Ball) {
-            float angle = -90;
-
+            float angle;
 
             if (strength != 0) {
                 strength--;
@@ -114,7 +87,6 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
 
             BrytUtBox.gameState.getScoreState().increaseMultiplier(1);
             BrytUtBox.gameState.getScoreState().addScore(100);
-
 
             angle = ((Ball) collidable).body.getLinearVelocity().angle() - 180;
 
@@ -126,13 +98,5 @@ public class Brick implements Updateable, Renderable, Debuggable, Pool.Poolable,
     @Override
     public Types getType() {
         return type;
-    }
-
-    public PowerUpEffect getPowerUpEffect() {
-        return powerUpEffect;
-    }
-
-    public void setPowerUpEffect(PowerUpEffect powerUpEffect) {
-        this.powerUpEffect = powerUpEffect;
     }
 }

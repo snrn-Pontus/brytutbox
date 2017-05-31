@@ -16,6 +16,8 @@ public class BrytUtBox extends Game {
     private GameBoard gameBoard;
     private LevelSelection levelSelection;
     public static int PPM = 32;
+    public static int BRICK_WIDTH = 64;
+    public static int BRICK_HEIGHT = 32;
     public static GameState gameState;
 
     public static int WIDTH;
@@ -28,7 +30,7 @@ public class BrytUtBox extends Game {
 
 
         settings = new Settings();
-        gameState = new GameState();
+        gameState = new GameState(this);
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
         batch = new SpriteBatch();
@@ -42,13 +44,13 @@ public class BrytUtBox extends Game {
     }
 
     public void selectLevel(Map map) {
-        gameBoard = new GameBoard(batch, uiBatch, map);
-        setScreen(gameBoard);
+        setScreen(new GameBoard(batch, uiBatch, map));
         gameState.setState(States.PLAYING);
     }
 
     public void gameOver(int levelNumber){
             setScreen(new GameOverScreen(batch,uiBatch,this, levelNumber));
+            gameState.setState(States.GAME_OVER);
     }
 
     @Override

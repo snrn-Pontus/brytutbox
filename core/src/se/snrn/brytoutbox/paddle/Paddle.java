@@ -7,22 +7,22 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
-import se.snrn.brytoutbox.*;
+import se.snrn.brytoutbox.BrytUtBox;
+import se.snrn.brytoutbox.Debuggable;
+import se.snrn.brytoutbox.Renderable;
+import se.snrn.brytoutbox.Updateable;
 import se.snrn.brytoutbox.ball.Ball;
 import se.snrn.brytoutbox.physics.Box2DFactory;
 import se.snrn.brytoutbox.physics.Collidable;
 import se.snrn.brytoutbox.physics.Types;
 
-
 import static se.snrn.brytoutbox.BrytUtBox.PPM;
-
 import static se.snrn.brytoutbox.physics.Types.PADDLE;
 
-public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
+public class Paddle implements Updateable, Renderable, Collidable {
 
     private Sprite sprite;
-    private int x;
-    private int y;
+
 
     private boolean movingLeft;
     private boolean movingRight;
@@ -33,13 +33,8 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
 
     public Paddle() {
         sprite = new Sprite(new Texture(Gdx.files.internal("gfx/paddle.png")));
-        x = 50;
-        y = 8;
-
         type = PADDLE;
-
-
-        body = Box2DFactory.createRectangleBody(x, y, 96, 16, this);
+        body = Box2DFactory.createRectangleBody(50, 8, 96, 16, this);
 
         sprite.setSize(3, 0.5f);
         stuckBall = null;
@@ -71,12 +66,6 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
         sprite.draw(batch);
     }
 
-    @Override
-    public void drawDebug(ShapeRenderer shapeRenderer) {
-        //shapeRenderer.rect(x, y, 64, 32);
-    }
-
-
     public void setMovingLeft(boolean movingLeft) {
         this.movingLeft = movingLeft;
     }
@@ -87,14 +76,9 @@ public class Paddle implements Updateable, Renderable, Debuggable, Collidable {
 
     @Override
     public void hit(Collidable collidable) {
-//        if (collidable instanceof PowerUp) {
-//            System.out.println("Powerup hit paddle");
-//            PowerUp powerUp = ((PowerUp) collidable);
-//            powerUp.getEffect().start();
-//        }
-        Ball ball;
+
         if (collidable instanceof Ball) {
-            ball = (Ball) collidable;
+            Ball ball = (Ball) collidable;
 
             float maxSpeed = ball.getMaxSpeed();
             BrytUtBox.gameState.getScoreState().resetMultiplier();

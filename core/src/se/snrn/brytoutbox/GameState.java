@@ -7,12 +7,12 @@ public class GameState implements Updateable {
     private States state;
     private int bricksLeft;
     private int level;
-    private boolean started;
+    private BrytUtBox brytUtBox;
 
-    public GameState() {
+    public GameState(BrytUtBox brytUtBox) {
+        this.brytUtBox = brytUtBox;
         scoreState = new ScoreState();
         ballsLeft = Settings.lives;
-        setStarted(false);
         state = States.LOADING;
     }
 
@@ -55,22 +55,17 @@ public class GameState implements Updateable {
     @Override
     public void update(float deltaTime) {
         if(state == States.PLAYING) {
-            if (ballsLeft == 0 && started) {
+            if (ballsLeft == 0 ) {
                 System.out.println("out of balls");
                 state = States.GAME_OVER;
             }
-            if (bricksLeft == 0 && started) {
+            if (bricksLeft == 0 ) {
                 System.out.println("all bricks destroyed");
-                state = States.GAME_OVER;
+                state = States.MAP_COMPLETED;
             }
         }
     }
 
-    public boolean isStarted() {
-        return started;
-    }
 
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
+
 }
