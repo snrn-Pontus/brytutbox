@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class BrytUtBox extends Game {
     private SpriteBatch batch;
     private SpriteBatch uiBatch;
-    private GameBoard gameBoard;
     private LevelSelection levelSelection;
     public static int PPM = 32;
     public static int BRICK_WIDTH = 64;
@@ -36,7 +35,6 @@ public class BrytUtBox extends Game {
         batch = new SpriteBatch();
         uiBatch = new SpriteBatch();
         levelSelection = new LevelSelection(batch, uiBatch, this);
-        //setScreen(new GameOverScreen(batch,uiBatch,this,1));
 
         mapDownloader = new MapDownloader();
         maps = mapDownloader.getMaps();
