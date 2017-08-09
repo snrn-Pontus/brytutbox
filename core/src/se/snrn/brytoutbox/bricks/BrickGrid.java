@@ -35,7 +35,6 @@ public class BrickGrid implements Updateable, Renderable {
             }
         }
         BrytUtBox.gameState.setBricksLeft(bricksLeft);
-        gameState.setStarted(true);
     }
 
     @Override

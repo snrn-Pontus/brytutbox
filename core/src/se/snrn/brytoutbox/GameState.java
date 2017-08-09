@@ -55,13 +55,10 @@ public class GameState implements Updateable {
     @Override
     public void update(float deltaTime) {
         if(state == States.PLAYING) {
-            if (ballsLeft == 0 ) {
+            if (ballsLeft == 0 || bricksLeft == 0) {
                 System.out.println("out of balls");
                 state = States.GAME_OVER;
-            }
-            if (bricksLeft == 0 ) {
-                System.out.println("all bricks destroyed");
-                state = States.MAP_COMPLETED;
+                brytUtBox.gameOver(getLevel());
             }
         }
     }

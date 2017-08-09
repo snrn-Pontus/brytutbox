@@ -5,28 +5,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import se.snrn.brytoutbox.gameover.GameOverScreen;
 import se.snrn.brytoutbox.levelselection.LevelSelection;
+import se.snrn.brytoutbox.mainmenuscreen.MainMenu;
 import se.snrn.brytoutbox.maps.Map;
 import se.snrn.brytoutbox.maps.MapDownloader;
+import se.snrn.brytoutbox.maps.MapFactory;
 
 import java.util.ArrayList;
 
 public class BrytUtBox extends Game {
     private SpriteBatch batch;
     private SpriteBatch uiBatch;
-    private LevelSelection levelSelection;
+
+    public static GameState gameState;
+
     public static int PPM = 32;
     public static int BRICK_WIDTH = 64;
     public static int BRICK_HEIGHT = 32;
-    public static GameState gameState;
-
     public static int WIDTH;
     public static int HEIGHT;
+
     public static Settings settings;
     private static ArrayList<Map> maps;
-    MapDownloader mapDownloader;
+    private MapDownloader mapDownloader;
+
     @Override
     public void create() {
-
 
         settings = new Settings();
         gameState = new GameState(this);
@@ -34,11 +37,15 @@ public class BrytUtBox extends Game {
         HEIGHT = Gdx.graphics.getHeight();
         batch = new SpriteBatch();
         uiBatch = new SpriteBatch();
-        levelSelection = new LevelSelection(batch, uiBatch, this);
+//        mapDownloader = new MapDownloader();
+//        maps = mapDownloader.getMaps();
+        setScreen(new MainMenu(batch,uiBatch,this));
 
-        mapDownloader = new MapDownloader();
-        maps = mapDownloader.getMaps();
+    }
 
+    public void goToLevelSelect() {
+        setScreen(new LevelSelection(batch, uiBatch, this));
+        gameState.setState(States.LEVEL_SELECTION);
     }
 
     public void selectLevel(Map map) {
@@ -46,22 +53,19 @@ public class BrytUtBox extends Game {
         gameState.setState(States.PLAYING);
     }
 
-    public void gameOver(int levelNumber){
-            setScreen(new GameOverScreen(batch,uiBatch,this, levelNumber));
-            gameState.setState(States.GAME_OVER);
+    public void gameOver(int levelNumber) {
+        setScreen(new GameOverScreen(batch, uiBatch, this, levelNumber));
+        gameState.setState(States.GAME_OVER);
     }
 
     @Override
     public void render() {
         super.render();
-        if(!mapDownloader.getMaps().isEmpty() && gameState.getState() == States.LOADING){
-            gameState.setState(States.LEVEL_SELECTION);
-            setScreen(levelSelection);
-        }
         gameState.update(Gdx.graphics.getDeltaTime());
-        if(gameState.getState() == States.GAME_OVER && (getScreen() instanceof GameBoard)){
-            gameOver(gameState.getLevel());
-        }
+        goToLevelSelect();
+//        if (!mapDownloader.getMaps().isEmpty() && gameState.getState() == States.LOADING) {
+//            goToLevelSelect();
+//        }
     }
 
     @Override

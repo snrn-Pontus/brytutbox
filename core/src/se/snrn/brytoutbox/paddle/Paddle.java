@@ -5,10 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import se.snrn.brytoutbox.BrytUtBox;
-import se.snrn.brytoutbox.Debuggable;
 import se.snrn.brytoutbox.Renderable;
 import se.snrn.brytoutbox.Updateable;
 import se.snrn.brytoutbox.ball.Ball;
@@ -29,6 +27,7 @@ public class Paddle implements Updateable, Renderable, Collidable {
     public Body body;
     private Types type;
     private Ball stuckBall;
+    private int width;
 
 
     public Paddle() {
@@ -114,5 +113,16 @@ public class Paddle implements Updateable, Renderable, Collidable {
 
     public boolean isMovingRight() {
         return movingRight;
+    }
+
+    public void increaseSize() {
+        body = Box2DFactory.createRectangleBody(50, 8, 160, 16, this);
+
+        sprite.setSize(5, 0.5f);
+
+    }
+
+    public void decreaseSize() {
+
     }
 }

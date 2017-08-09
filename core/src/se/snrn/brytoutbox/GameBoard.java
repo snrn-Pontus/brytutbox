@@ -24,6 +24,7 @@ import static se.snrn.brytoutbox.BrytUtBox.*;
 public class GameBoard implements Screen {
 
 
+
     private Batch batch;
 
     public static Paddle paddle;
@@ -31,7 +32,7 @@ public class GameBoard implements Screen {
 
     private BrickGrid brickGrid;
     private CollisionHandler collisionHandler;
-    private World world;
+    public static World world;
     private OrthographicCamera orthographicCamera;
     private OrthographicCamera uiCamera;
 
